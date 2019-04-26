@@ -21,18 +21,18 @@
   
   
   
-  <meta name="description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符">
+  <meta name="description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，">
 <meta name="keywords" content="杂记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java杂记">
 <meta property="og:url" content="http://yoursite.com/2019/04/25/java杂记/index.html">
 <meta property="og:site_name" content="bliu">
-<meta property="og:description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符">
+<meta property="og:description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-04-26T09:04:26.122Z">
+<meta property="og:updated_time" content="2019-04-26T09:52:49.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java杂记">
-<meta name="twitter:description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符">
+<meta name="twitter:description" content="局部变量必须初始化后使用(静态和全局变量则可以直接使用)  符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，">
   
     <link rel="alternate" href="/atom.xml" title="bliu" type="application/atom+xml">
   
@@ -81,10 +81,6 @@ var themeMenus = {};
 
   themeMenus["/archives"] = "Archives"; 
 
-  themeMenus["/categories"] = "Categories"; 
-
-  themeMenus["/tags"] = "Tags"; 
-
   themeMenus["/about"] = "About"; 
 
 </script>
@@ -117,10 +113,6 @@ var themeMenus = {};
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/">Home</a> </li>
                     
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/archives">Archives</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/categories">Categories</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/tags">Tags</a> </li>
                     
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/about">About</a> </li>
                     
@@ -196,7 +188,8 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
+        <a id="more"></a>
+<ul>
 <li><p><strong>局部变量必须初始化后使用</strong>(静态和全局变量则可以直接使用)</p>
 </li>
 <li><p><strong>符号引用</strong>就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符号引用会被替换为直接引用，下次就不用搜索了。直接引用就是偏移量，通过偏移量虚拟机可以直接在该类的内存区域中找到方法字节码的起始位置。</p>
@@ -253,15 +246,6 @@ var themeMenus = {};
   
     
 <nav id="article-nav">
-  
-    <a href="/2019/04/25/article/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          我的第一篇博客
-        
-      </div>
-    </a>
   
   
     <a href="/2019/04/25/springMVC 返回给前端数据乱码/" id="article-nav-older" class="article-nav-link-wrap">
@@ -323,10 +307,6 @@ var themeMenus = {};
     <a href="/" class="mobile-nav-link">Home</a>
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
   
     <a href="/about" class="mobile-nav-link">About</a>
   

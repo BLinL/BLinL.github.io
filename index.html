@@ -78,10 +78,6 @@ var themeMenus = {};
 
   themeMenus["/archives"] = "Archives"; 
 
-  themeMenus["/categories"] = "Categories"; 
-
-  themeMenus["/tags"] = "Tags"; 
-
   themeMenus["/about"] = "About"; 
 
 </script>
@@ -114,10 +110,6 @@ var themeMenus = {};
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/">Home</a> </li>
                     
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/archives">Archives</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/categories">Categories</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/tags">Tags</a> </li>
                     
                       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class href="/about">About</a> </li>
                     
@@ -167,56 +159,6 @@ var themeMenus = {};
         
           <section id="main">
   
-    <article id="post-article" class="article article-type-post" itemscope itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/25/article/">我的第一篇博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2019/04/25/article/" class="article-date">
-	  <time datetime="2019-04-25T06:44:32.000Z" itemprop="datePublished">April 25, 2019</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我的第一篇博客，欢迎访问</p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/个人网站/">个人网站</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARTICLE/">ARTICLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-      
-            
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-    
-
-  
     <article id="post-java杂记" class="article article-type-post" itemscope itemprop="blogPost">
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -241,7 +183,8 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
+        <a id="more"></a>
+<ul>
 <li><p><strong>局部变量必须初始化后使用</strong>(静态和全局变量则可以直接使用)</p>
 </li>
 <li><p><strong>符号引用</strong>就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符号引用会被替换为直接引用，下次就不用搜索了。直接引用就是偏移量，通过偏移量虚拟机可以直接在该类的内存区域中找到方法字节码的起始位置。</p>
@@ -303,7 +246,8 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>原因：SpringMVC默认处理的字符集是ISO-8859-1，在Spring的org.springframework.http.converter.StringHttpMessageConverter类中可以看到如下代码：</p>
+        <a id="more"></a>
+<p>原因：SpringMVC默认处理的字符集是ISO-8859-1，在Spring的org.springframework.http.converter.StringHttpMessageConverter类中可以看到如下代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static final Charset DEFAULT_CHARSET = Charset.forName(&quot;ISO-8859-1&quot;);</span><br></pre></td></tr></table></figure>
 <p>解决：</p>
 <ol>
@@ -325,6 +269,56 @@ var themeMenus = {};
       
   <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springMVC/">springMVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/乱码/">乱码</a></li></ul>
+
+      
+            
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+    
+
+  
+    <article id="post-article" class="article article-type-post" itemscope itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/04/25/article/">我的第一篇博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2019/04/25/article/" class="article-date">
+	  <time datetime="2019-04-25T06:44:32.000Z" itemprop="datePublished">April 25, 2019</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我的第一篇博客，欢迎访问</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/个人网站/">个人网站</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARTICLE/">ARTICLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
       
             
@@ -402,34 +396,6 @@ var themeMenus = {};
      			  <li><a href="https://www.weibo.com/5730350816/profile?rightmod=1&amp;wvr=6&amp;mod=personinfo&amp;is_all=1" title="Weibo"><i class="fa fa-weibo" aria-hidden="true"></i></a></li> 
           
    		
-          
-     			  <li><a href title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-     			  <li><a href title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-     			  <li><a href title="Google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-     			  <li><a href title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-     			  <li><a href title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-     			  <li><a href title="Flickr"><i class="fa fa-flickr" aria-hidden="true"></i></a></li> 
-          
-   		
-          
-            <li><a href="mailto:?subject=请联系我&body=我能帮你什么" title="email"><i class="fa fa-envelope" aria-hidden="true"></i></a></li> 
-          
-   		
    		</ul>
 
 
@@ -462,18 +428,6 @@ var themeMenus = {};
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2019/04/25/article/">我的第一篇博客</a></h6>
-              <span>April 25, 2019</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
               <h6 style="margin: 0;"><a href="/2019/04/25/java杂记/">java杂记</a></h6>
               <span>April 25, 2019</span>
             </div>
@@ -487,6 +441,18 @@ var themeMenus = {};
             
 
               <h6 style="margin: 0;"><a href="/2019/04/25/springMVC 返回给前端数据乱码/">springMVC 返回给前端数据乱码</a></h6>
+              <span>April 25, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2019/04/25/article/">我的第一篇博客</a></h6>
               <span>April 25, 2019</span>
             </div>
 
@@ -512,26 +478,6 @@ var themeMenus = {};
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARTICLE/">ARTICLE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC/">springMVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/乱码/">乱码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/ARTICLE/" style="font-size: 10px;">ARTICLE</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/springMVC/" style="font-size: 10px;">springMVC</a> <a href="/tags/乱码/" style="font-size: 10px;">乱码</a> <a href="/tags/杂记/" style="font-size: 10px;">杂记</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -576,10 +522,6 @@ var themeMenus = {};
     <a href="/" class="mobile-nav-link">Home</a>
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
   
     <a href="/about" class="mobile-nav-link">About</a>
   
