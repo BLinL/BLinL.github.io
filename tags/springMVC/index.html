@@ -351,14 +351,7 @@
                 <span>springMVC 返回给前端数据乱码</span>
         </a>
         <div class="abstract-content">
-            
-原因：SpringMVC默认处理的字符集是ISO-8859-1，在Spring的org.springframework.http.converter.StringHttpMessageConverter类中可以看到如下代码：
-1public static final Charset DEFAULT_CHARSET = Charset.forName(&quot;ISO-8859-1&quot;);
-解决：
-
-@RequestMapping中添加produces=”text/html;charset=UTF-8
-
-1@RequestMapping(value="/login.do",me...
+            <p>springMVC 返回给前端数据乱码，解决</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -473,22 +466,9 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 5
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -505,11 +485,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/24</span><a class="archive-post-title" href="/2019/05/24/如何插入图片/">如何插入图片</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href="/2019/05/06/软件设计流程/">我的第一篇博客</a>
         </li>
     
     

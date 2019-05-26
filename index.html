@@ -388,38 +388,6 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/05/06/软件设计流程/">
-            
-                <span>我的第一篇博客</span>
-        </a>
-        <div class="abstract-content">
-            1，需求分析    在这一阶段,我们需要理清楚到底要解决哪些问题    并完成“软件需求说明书”2，概要设计    在这一阶段，根据上一阶段的需求来确定总体的实现方案    确定整个软件的大体布局    各模块的功能以及模块之间的衔接    模块与外部系统的关系，    并完成“软件概要设计说明书”3，详细设计    在这一阶段，我们应该开始探讨每个模块该如何具体实现    每个实现中需要哪些算法、属性、参数、数据结构、接口
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="ARTICLE">ARTICLE</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="概要设计">概要设计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/04/25/article/">
             
                 <span>我的第一篇博客</span>
@@ -457,14 +425,7 @@ height:50vh;
                 <span>java杂记</span>
         </a>
         <div class="abstract-content">
-            
-
-局部变量必须初始化后使用(静态和全局变量则可以直接使用)
-
-符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符号引用会被替换为直接引用，下次就不用搜索了。直接引用就是偏移量，通过偏移量虚拟机可以直接在该类的内存区域中找到方法字节码的起始位置。
-
-
-   类初始化时机：只有当对类的主动使用的时候才会导致...
+            <p>java杂记</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -493,14 +454,7 @@ height:50vh;
                 <span>springMVC 返回给前端数据乱码</span>
         </a>
         <div class="abstract-content">
-            
-原因：SpringMVC默认处理的字符集是ISO-8859-1，在Spring的org.springframework.http.converter.StringHttpMessageConverter类中可以看到如下代码：
-1public static final Charset DEFAULT_CHARSET = Charset.forName(&quot;ISO-8859-1&quot;);
-解决：
-
-@RequestMapping中添加produces=”text/html;charset=UTF-8
-
-1@RequestMapping(value="/login.do",me...
+            <p>springMVC 返回给前端数据乱码，解决</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -653,22 +607,9 @@ height:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 5
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -685,11 +626,6 @@ height:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/24</span><a class="archive-post-title" href="/2019/05/24/如何插入图片/">如何插入图片</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href="/2019/05/06/软件设计流程/">我的第一篇博客</a>
         </li>
     
     

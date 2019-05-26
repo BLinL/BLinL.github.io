@@ -351,14 +351,7 @@
                 <span>java杂记</span>
         </a>
         <div class="abstract-content">
-            
-
-局部变量必须初始化后使用(静态和全局变量则可以直接使用)
-
-符号引用就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符号引用会被替换为直接引用，下次就不用搜索了。直接引用就是偏移量，通过偏移量虚拟机可以直接在该类的内存区域中找到方法字节码的起始位置。
-
-
-   类初始化时机：只有当对类的主动使用的时候才会导致...
+            <p>java杂记</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -387,14 +380,7 @@
                 <span>springMVC 返回给前端数据乱码</span>
         </a>
         <div class="abstract-content">
-            
-原因：SpringMVC默认处理的字符集是ISO-8859-1，在Spring的org.springframework.http.converter.StringHttpMessageConverter类中可以看到如下代码：
-1public static final Charset DEFAULT_CHARSET = Charset.forName(&quot;ISO-8859-1&quot;);
-解决：
-
-@RequestMapping中添加produces=”text/html;charset=UTF-8
-
-1@RequestMapping(value="/login.do",me...
+            <p>springMVC 返回给前端数据乱码，解决</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -509,22 +495,9 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 5
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -541,11 +514,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/24</span><a class="archive-post-title" href="/2019/05/24/如何插入图片/">如何插入图片</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href="/2019/05/06/软件设计流程/">我的第一篇博客</a>
         </li>
     
     
