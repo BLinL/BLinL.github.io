@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">565</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">574</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -435,10 +435,15 @@ height:50vh;
 <p>在实体类Student加上 <code>@ConfigurationProperties(&quot;student&quot;)</code>注解，将配置文件中以 student前缀的属性值自动绑定到对应的字段中。</p>
 <p>运行测试类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    Student student;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(student);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;w</span><br></pre></td></tr></table></figure>
-<h2 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**注意：**</span><br><span class="line"></span><br><span class="line">使用.properties文件时，读出的数据会乱码</span><br><span class="line"></span><br><span class="line">&gt; application.properties中文乱之所以乱码是应spring boot项目默认的加载配置文件application是通过字符集ISO-8859-1载入的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">使用properties文件</span><br></pre></td></tr></table></figure>
-<p>student.name=张三<br>student.id=2<br><code>`</code></p>
-<p>运行结果：</p>
-<p>Student{id=2, name=’å¼ ä¸’}</p>
+<h2 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student&#123;id=<span class="number">2</span>, name=<span class="string">'张三'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<p>使用.properties文件时，读出的数据会乱码</p>
+<blockquote>
+<p>application.properties中文乱之所以乱码是应spring boot项目默认的加载配置文件application是通过字符集ISO-8859-1载入的</p>
+</blockquote>
+<p>使用properties文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">student.name=张三</span><br><span class="line">student.id=2</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student&#123;id=<span class="number">2</span>, name=<span class="string">'å¼ ä¸'</span>&#125;</span><br></pre></td></tr></table></figure></p>
 
     </article>
     <!-- license  -->
@@ -668,6 +673,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 9
@@ -686,12 +693,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/14</span><a class="archive-post-title" href="/2019/07/14/springboot简单配置/">springboot简单配置</a>
+            <span class="archive-post-date">07/14</span><a class="archive-post-title" href="/2019/07/14/springboot-RESTful-API/">springboot RESTful API</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/14</span><a class="archive-post-title" href="/2019/07/14/springboot-RESTful-API/">springboot RESTful API</a>
+            <span class="archive-post-date">07/14</span><a class="archive-post-title" href="/2019/07/14/springboot简单配置/">springboot简单配置</a>
         </li>
     
     
@@ -716,7 +723,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/java杂记/">java杂记</a>
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/article/">我的第一篇博客</a>
         </li>
     
     
@@ -726,7 +733,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/article/">我的第一篇博客</a>
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/java杂记/">java杂记</a>
         </li>
     
     </ul></div>
@@ -734,25 +741,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="spring"><span class="iconfont-archer">&#xe606;</span>spring</span>
-    
-        <span class="sidebar-tag-name" data-tags="DI"><span class="iconfont-archer">&#xe606;</span>DI</span>
-    
-        <span class="sidebar-tag-name" data-tags="ARTICLE"><span class="iconfont-archer">&#xe606;</span>ARTICLE</span>
-    
-        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
-    
-        <span class="sidebar-tag-name" data-tags="springboot, RESTful"><span class="iconfont-archer">&#xe606;</span>springboot, RESTful</span>
-    
-        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
+        <span class="sidebar-tag-name" data-tags="杂记"><span class="iconfont-archer">&#xe606;</span>杂记</span>
     
         <span class="sidebar-tag-name" data-tags="乱码"><span class="iconfont-archer">&#xe606;</span>乱码</span>
     
         <span class="sidebar-tag-name" data-tags="springMVC"><span class="iconfont-archer">&#xe606;</span>springMVC</span>
     
-        <span class="sidebar-tag-name" data-tags="杂记"><span class="iconfont-archer">&#xe606;</span>杂记</span>
-    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
+    
+        <span class="sidebar-tag-name" data-tags="springboot, RESTful"><span class="iconfont-archer">&#xe606;</span>springboot, RESTful</span>
+    
+        <span class="sidebar-tag-name" data-tags="spring"><span class="iconfont-archer">&#xe606;</span>spring</span>
+    
+        <span class="sidebar-tag-name" data-tags="DI"><span class="iconfont-archer">&#xe606;</span>DI</span>
+    
+        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="ARTICLE"><span class="iconfont-archer">&#xe606;</span>ARTICLE</span>
     
         <span class="sidebar-tag-name" data-tags="SSM Mybatis"><span class="iconfont-archer">&#xe606;</span>SSM Mybatis</span>
     
@@ -789,13 +796,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="spring"><span class="iconfont-archer">&#xe60a;</span>spring</span>
-    
-        <span class="sidebar-category-name" data-categories="个人网站"><span class="iconfont-archer">&#xe60a;</span>个人网站</span>
-    
         <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
     
         <span class="sidebar-category-name" data-categories="version-cintroll"><span class="iconfont-archer">&#xe60a;</span>version-cintroll</span>
+    
+        <span class="sidebar-category-name" data-categories="spring"><span class="iconfont-archer">&#xe60a;</span>spring</span>
+    
+        <span class="sidebar-category-name" data-categories="个人网站"><span class="iconfont-archer">&#xe60a;</span>个人网站</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
