@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">566</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">565</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -410,7 +410,25 @@ height:50vh;
 <p>测试：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    Student student;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(student);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果 ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">.yml后缀和.yaml后缀有区别吗？</span><br><span class="line"></span><br><span class="line">没有。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; YAML是一种人类可读的数据序列化格式,可以从C,Perl和Python等编程语言,XML中的想法和电子邮件的数据格式中获取想法.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">可以在appplication.properties中通过占位符``$&#123;&#125;``进行引用，不过yaml好像不支持。</span><br><span class="line"></span><br><span class="line">$&#123;random&#125;可以生成随机数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">## application 配置多环境</span><br><span class="line"></span><br><span class="line">在实际的开发中往往会有多种环境，例如开发环境、测试环境、上线环境，不同的环境往往需要配置不同的参数，例如，端口号、数据库等</span><br><span class="line"></span><br><span class="line">你只需要使用 ``application-&#123;profile&#125;.properties``,其中profile表示“环境”。</span><br><span class="line"></span><br><span class="line">例如：</span><br><span class="line"></span><br><span class="line">`` application-dev.yaml``  开发环境</span><br><span class="line"></span><br><span class="line">`` application-test.yaml `` 测试环境</span><br><span class="line"></span><br><span class="line">``application-prod.yaml `` 上线环境</span><br><span class="line"></span><br><span class="line">**指定需要被加载的环境 **</span><br><span class="line"></span><br><span class="line">在``application.yaml``中指定要被加载的参数</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">#表示加载测试环境</span><br><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: test</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student&#123;id=<span class="number">0</span>, name=<span class="string">'liu'</span>&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>.yml后缀和.yaml后缀有区别吗？</p>
+<p>没有。</p>
+<blockquote>
+<p>YAML是一种人类可读的数据序列化格式,可以从C,Perl和Python等编程语言,XML中的想法和电子邮件的数据格式中获取想法.</p>
+</blockquote>
+<p>可以在appplication.properties中通过占位符<code>${}</code>进行引用，不过yaml好像不支持。</p>
+<p>${random}可以生成随机数</p>
+<hr>
+<h2 id="application-配置多环境"><a href="#application-配置多环境" class="headerlink" title="application 配置多环境"></a>application 配置多环境</h2><p>在实际的开发中往往会有多种环境，例如开发环境、测试环境、上线环境，不同的环境往往需要配置不同的参数，例如，端口号、数据库等</p>
+<p>你只需要使用 <code>application-{profile}.properties</code>,其中profile表示“环境”。</p>
+<p>例如：</p>
+<p><code>application-dev.yaml</code>  开发环境</p>
+<p><code>application-test.yaml</code> 测试环境</p>
+<p><code>application-prod.yaml</code> 上线环境</p>
+<p><strong>指定需要被加载的环境 </strong></p>
+<p>在<code>application.yaml</code>中指定要被加载的参数</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#表示加载测试环境</span><br><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: test</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="springboot-自动配置"><a href="#springboot-自动配置" class="headerlink" title="springboot 自动配置"></a>springboot 自动配置</h2><p>取代xml的方式定义bean</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student:</span><br><span class="line">  name: 张三</span><br><span class="line">  id: 2</span><br></pre></td></tr></table></figure>
@@ -534,7 +552,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-配置系定义参数"><span class="toc-number">1.</span> <span class="toc-text">application 配置系定义参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot-自动配置"><span class="toc-number">2.</span> <span class="toc-text">springboot 自动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果："><span class="toc-number">3.</span> <span class="toc-text">结果：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-配置系定义参数"><span class="toc-number">1.</span> <span class="toc-text">application 配置系定义参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-配置多环境"><span class="toc-number">2.</span> <span class="toc-text">application 配置多环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot-自动配置"><span class="toc-number">3.</span> <span class="toc-text">springboot 自动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果："><span class="toc-number">4.</span> <span class="toc-text">结果：</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -547,6 +565,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -696,11 +716,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/article/">我的第一篇博客</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/java杂记/">java杂记</a>
         </li>
     
@@ -709,10 +724,23 @@ top:50vh;
             <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/springMVC 返回给前端数据乱码/">springMVC 返回给前端数据乱码</a>
         </li>
     
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href="/2019/04/25/article/">我的第一篇博客</a>
+        </li>
+    
     </ul></div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="spring"><span class="iconfont-archer">&#xe606;</span>spring</span>
+    
+        <span class="sidebar-tag-name" data-tags="DI"><span class="iconfont-archer">&#xe606;</span>DI</span>
+    
+        <span class="sidebar-tag-name" data-tags="ARTICLE"><span class="iconfont-archer">&#xe606;</span>ARTICLE</span>
+    
+        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
     
         <span class="sidebar-tag-name" data-tags="springboot, RESTful"><span class="iconfont-archer">&#xe606;</span>springboot, RESTful</span>
     
@@ -722,17 +750,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="springMVC"><span class="iconfont-archer">&#xe606;</span>springMVC</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
         <span class="sidebar-tag-name" data-tags="杂记"><span class="iconfont-archer">&#xe606;</span>杂记</span>
     
-        <span class="sidebar-tag-name" data-tags="ARTICLE"><span class="iconfont-archer">&#xe606;</span>ARTICLE</span>
-    
-        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
-    
-        <span class="sidebar-tag-name" data-tags="spring"><span class="iconfont-archer">&#xe606;</span>spring</span>
-    
-        <span class="sidebar-tag-name" data-tags="DI"><span class="iconfont-archer">&#xe606;</span>DI</span>
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="SSM Mybatis"><span class="iconfont-archer">&#xe606;</span>SSM Mybatis</span>
     
@@ -769,13 +789,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
-    
-        <span class="sidebar-category-name" data-categories="version-cintroll"><span class="iconfont-archer">&#xe60a;</span>version-cintroll</span>
+        <span class="sidebar-category-name" data-categories="spring"><span class="iconfont-archer">&#xe60a;</span>spring</span>
     
         <span class="sidebar-category-name" data-categories="个人网站"><span class="iconfont-archer">&#xe60a;</span>个人网站</span>
     
-        <span class="sidebar-category-name" data-categories="spring"><span class="iconfont-archer">&#xe60a;</span>spring</span>
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="version-cintroll"><span class="iconfont-archer">&#xe60a;</span>version-cintroll</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
