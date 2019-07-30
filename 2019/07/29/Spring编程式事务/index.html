@@ -16,7 +16,7 @@
 <meta property="og:description" content="spring事务初探">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/2019/07/29/Spring编程式事务/table.png">
-<meta property="og:updated_time" content="2019-07-30T10:45:33.532Z">
+<meta property="og:updated_time" content="2019-07-30T14:10:04.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring编程式事务">
 <meta name="twitter:description" content="spring事务初探">
@@ -108,6 +108,7 @@
 <p>事务超时 ：事务允许执行的最长时间，如果超过这个时间还没完成则自动回滚</p>
 <p>回滚规则 ：事务的回滚规则</p>
 <h2 id="事物的隔离级别："><a href="#事物的隔离级别：" class="headerlink" title="事物的隔离级别："></a>事物的隔离级别：</h2><p>读未提交</p>
+<p>读已提交</p>
 <p>可重复读</p>
 <p>序列化</p>
 <p><strong>TransactionDefinition.ISOLATION_READ_UNCOMMITTED:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></p>
@@ -129,8 +130,8 @@
 <li><strong>TransactionDefinition.PROPAGATION_NESTED：</strong> 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。</li>
 </ul>
 <h2 id="spring事务-编程式"><a href="#spring事务-编程式" class="headerlink" title="spring事务(编程式)"></a>spring事务(编程式)</h2><p>三个主要接口</p>
-<p><strong>TransactionDefinition：</strong> TransactionDefinition定义事务，它包含了事务的静态属性，比如：事务传播行为、超时时间等等。Spring 为我们提供了一个默认的实现类：DefaultTransactionDefinition，该类适用于大多数情况</p>
-<p><strong>PlatformTransactionManager： </strong>PlatformTransactionManager 用于执行具体的事务操作</p>
+<p><strong>1. TransactionDefinition：</strong> TransactionDefinition定义事务，它包含了事务的静态属性，比如：事务传播行为、超时时间等等。Spring 为我们提供了一个默认的实现类：DefaultTransactionDefinition，该类适用于大多数情况</p>
+<p><strong>2. PlatformTransactionManager： </strong>PlatformTransactionManager 用于执行具体的事务操作</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Public <span class="class"><span class="keyword">interface</span> <span class="title">PlatformTransactionManager</span></span>&#123;</span><br><span class="line">    <span class="function">TransactionStatus <span class="title">getTransaction</span><span class="params">(TransactionDefinition definition)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(TransactionStatus status)</span><span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rollback</span><span class="params">(TransactionStatus status)</span><span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote><p>根据底层所使用的不同的持久化 API 或框架，PlatformTransactionManager 的主要实现类大致如下：</p>
 <ul>
@@ -140,7 +141,7 @@
 <li>另外还有JtaTransactionManager 、JdoTransactionManager、JmsTransactionManager等</li>
 </ul>
 </blockquote>
-<p><strong>TransactionStatus：</strong> 事物的状态</p>
+<p><strong>3. TransactionStatus：</strong> 事物的状态</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">TransactionStatus</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isNewTransaction</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setRollbackOnly</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRollbackOnly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="下面是实例讲解"><a href="#下面是实例讲解" class="headerlink" title="下面是实例讲解"></a>下面是实例讲解</h2><p>使用mysql、Spring、mybatis</p>
 <p>首先创建数据库，使用mysql</p>
@@ -168,11 +169,13 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.liu.mapper.AccountMapper;</span><br><span class="line"><span class="keyword">import</span> com.liu.service.AccountService;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(<span class="string">"classpath:spring/applicationContext.xml"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestTranscation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AccountService accountService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> f = accountService.trans(<span class="string">"lisi"</span>, <span class="string">"zhangsan"</span>, BigDecimal.valueOf(<span class="number">100</span>));</span><br><span class="line">        System.out.println(f);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们让lisi给zhangsan转账100元，但是由于转账过程中抛出异常，</p>
 <p>我已经执行了setRollbackOnly()操作，所以事务回滚，钱并不会转出</p>
+<p>思维导图</p>
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/29/Spring编程式事务/" data-id="cjyppazja001crowuyjleswpp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/29/Spring编程式事务/" data-id="cjypwf58c001e8cwuyg33jlwk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务，编程式事务/">事务，编程式事务</a></li></ul>
