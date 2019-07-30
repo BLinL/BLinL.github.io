@@ -16,7 +16,7 @@
 <meta property="og:description" content="spring事务初探">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/2019/07/29/Spring编程式事务/table.png">
-<meta property="og:updated_time" content="2019-07-30T03:03:33.517Z">
+<meta property="og:updated_time" content="2019-07-30T10:45:33.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring编程式事务">
 <meta name="twitter:description" content="spring事务初探">
@@ -132,13 +132,12 @@
 <p><strong>TransactionDefinition：</strong> TransactionDefinition定义事务，它包含了事务的静态属性，比如：事务传播行为、超时时间等等。Spring 为我们提供了一个默认的实现类：DefaultTransactionDefinition，该类适用于大多数情况</p>
 <p><strong>PlatformTransactionManager： </strong>PlatformTransactionManager 用于执行具体的事务操作</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Public <span class="class"><span class="keyword">interface</span> <span class="title">PlatformTransactionManager</span></span>&#123;</span><br><span class="line">    <span class="function">TransactionStatus <span class="title">getTransaction</span><span class="params">(TransactionDefinition definition)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(TransactionStatus status)</span><span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rollback</span><span class="params">(TransactionStatus status)</span><span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>根据底层所使用的不同的持久化 API 或框架，PlatformTransactionManager 的主要实现类大致如下：</p>
+<blockquote><p>根据底层所使用的不同的持久化 API 或框架，PlatformTransactionManager 的主要实现类大致如下：</p>
 <ul>
 <li>DataSourceTransactionManager：适用于使用JDBC和iBatis进行数据持久化操作的情况。</li>
 <li>HibernateTransactionManager：适用于使用Hibernate进行数据持久化操作的情况。</li>
 <li>JpaTransactionManager：适用于使用JPA进行数据持久化操作的情况。</li>
-<li>另外还有JtaTransactionManager 、JdoTransactionManager、JmsTransactionManager等等。</li>
+<li>另外还有JtaTransactionManager 、JdoTransactionManager、JmsTransactionManager等</li>
 </ul>
 </blockquote>
 <p><strong>TransactionStatus：</strong> 事物的状态</p>
@@ -173,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/29/Spring编程式事务/" data-id="cjyp8lt20001bdswu8cjd5r4x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/29/Spring编程式事务/" data-id="cjypp1dxt001ez4wu19rrxohc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务，编程式事务/">事务，编程式事务</a></li></ul>
@@ -183,6 +182,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/07/30/Spring声明式事务/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring声明式事务
+        
+      </div>
+    </a>
   
   
     <a href="/2019/07/18/hibernate-入门/" id="article-nav-older" class="article-nav-link-wrap">
@@ -213,7 +221,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARTICLE/">ARTICLE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DI/">DI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM-Mybatis/">SSM Mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm-hibernate/">orm,hibernate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC/">springMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot-RESTful/">springboot, RESTful</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/乱码/">乱码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务，编程式事务/">事务，编程式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARTICLE/">ARTICLE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DI/">DI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSM-Mybatis/">SSM Mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm-hibernate/">orm,hibernate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springMVC/">springMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot-RESTful/">springboot, RESTful</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring声明式事务-事务/">spring声明式事务 事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/乱码/">乱码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务，编程式事务/">事务，编程式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
     </div>
   </div>
 
@@ -223,7 +231,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ARTICLE/" style="font-size: 10px;">ARTICLE</a> <a href="/tags/DI/" style="font-size: 10px;">DI</a> <a href="/tags/SSM-Mybatis/" style="font-size: 10px;">SSM Mybatis</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 20px;">hexo</a> <a href="/tags/orm-hibernate/" style="font-size: 10px;">orm,hibernate</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/springMVC/" style="font-size: 10px;">springMVC</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/springboot-RESTful/" style="font-size: 10px;">springboot, RESTful</a> <a href="/tags/乱码/" style="font-size: 10px;">乱码</a> <a href="/tags/事务，编程式事务/" style="font-size: 10px;">事务，编程式事务</a> <a href="/tags/杂记/" style="font-size: 10px;">杂记</a>
+      <a href="/tags/ARTICLE/" style="font-size: 10px;">ARTICLE</a> <a href="/tags/DI/" style="font-size: 10px;">DI</a> <a href="/tags/SSM-Mybatis/" style="font-size: 10px;">SSM Mybatis</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 20px;">hexo</a> <a href="/tags/orm-hibernate/" style="font-size: 10px;">orm,hibernate</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/springMVC/" style="font-size: 10px;">springMVC</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/springboot-RESTful/" style="font-size: 10px;">springboot, RESTful</a> <a href="/tags/spring声明式事务-事务/" style="font-size: 10px;">spring声明式事务 事务</a> <a href="/tags/乱码/" style="font-size: 10px;">乱码</a> <a href="/tags/事务，编程式事务/" style="font-size: 10px;">事务，编程式事务</a> <a href="/tags/杂记/" style="font-size: 10px;">杂记</a>
     </div>
   </div>
 
@@ -245,6 +253,10 @@
       <ul>
         
           <li>
+            <a href="/2019/07/30/Spring声明式事务/">Spring声明式事务</a>
+          </li>
+        
+          <li>
             <a href="/2019/07/29/Spring编程式事务/">Spring编程式事务</a>
           </li>
         
@@ -258,10 +270,6 @@
         
           <li>
             <a href="/2019/07/14/springboot简单配置/">springboot简单配置</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/09/基础-SSM框架搭建/">[基础]SSM框架搭建</a>
           </li>
         
       </ul>
