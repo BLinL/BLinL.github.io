@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="stay hungry ,stay foolish">
 <meta property="og:description" content="Spring 声明式事务介绍">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-07-30T10:46:43.524Z">
+<meta property="og:updated_time" content="2019-07-30T10:50:34.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring声明式事务">
 <meta name="twitter:description" content="Spring 声明式事务介绍">
@@ -98,7 +98,7 @@
 <p>使用@Transcational注解，添加到合适的方法上</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">trans</span><span class="params">(String fromAccount, String toAccount, BigDecimal money)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//需要事务处理</span></span><br><span class="line">            <span class="keyword">int</span> a = accountMapper.reduceMoney(fromAccount,money);</span><br><span class="line">            <span class="keyword">int</span> c = <span class="number">1</span> / <span class="number">0</span>;<span class="comment">//出了异常，钱就没了</span></span><br><span class="line">            <span class="keyword">int</span> b = accountMapper.addMoney(toAccount,money);</span><br><span class="line">            <span class="keyword">return</span> a&gt;<span class="number">0</span>&amp;&amp;b&gt;<span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>@Transactional</code>注解的参数</p>
-<blockquote><footer><strong>https://www.ibm.com/developerworks/cn/java/j-master-spring-transactional-use/index.html [透彻的掌握 Spring 中@transactional 的使用]</strong></footer></blockquote>
+<blockquote><h5 id="Transactional-注解的属性信息"><a href="#Transactional-注解的属性信息" class="headerlink" title="@Transactional 注解的属性信息"></a>@Transactional 注解的属性信息</h5><footer><strong>刘万振</strong><cite><a href="https://www.ibm.com/developerworks/cn/java/j-master-spring-transactional-use/index.html" target="_blank" rel="noopener">透彻的掌握 Spring 中@transactional 的使用</a></cite></footer></blockquote>
 <table>
 <thead>
 <tr>
@@ -144,7 +144,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/30/Spring声明式事务/" data-id="cjypp1dw00001z4wu75hibyq9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/30/Spring声明式事务/" data-id="cjyppazhs0005rowuhudd6vs8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring声明式事务-事务/">spring声明式事务 事务</a></li></ul>
