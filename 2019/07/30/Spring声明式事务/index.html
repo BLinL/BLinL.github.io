@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="stay hungry ,stay foolish">
 <meta property="og:description" content="Spring 声明式事务介绍">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-07-30T10:50:34.402Z">
+<meta property="og:updated_time" content="2019-08-01T14:11:50.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring声明式事务">
 <meta name="twitter:description" content="Spring 声明式事务介绍">
@@ -91,12 +91,15 @@
 <a id="more"></a>
 <h1 id="Spring-声明式事务"><a href="#Spring-声明式事务" class="headerlink" title="Spring 声明式事务"></a>Spring 声明式事务</h1><p>spring有两种处理事务的方式，编程式和声明式</p>
 <p>声明式事务主要使用AOP实现，它的优点是耦合度低</p>
-<p>声明式事务可以使用传统的配置文件或者注解实现</p>
-<p>第一步：在xml文件中配置事务信息</p>
+<p>声明式事务可以使用传统的<em>配置文件</em>或者<em>注解</em>实现</p>
+<h2 id="1-Transcation注解实现"><a href="#1-Transcation注解实现" class="headerlink" title="1.@Transcation注解实现"></a>1.@Transcation注解实现</h2><p>第一步：在xml文件中配置事务信息</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--注解驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--jdbc事务管理器 适用于mybatis 和jdbc--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"DataSource"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>第二步：</p>
 <p>使用@Transcational注解，添加到合适的方法上</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">trans</span><span class="params">(String fromAccount, String toAccount, BigDecimal money)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//需要事务处理</span></span><br><span class="line">            <span class="keyword">int</span> a = accountMapper.reduceMoney(fromAccount,money);</span><br><span class="line">            <span class="keyword">int</span> c = <span class="number">1</span> / <span class="number">0</span>;<span class="comment">//出了异常，钱就没了</span></span><br><span class="line">            <span class="keyword">int</span> b = accountMapper.addMoney(toAccount,money);</span><br><span class="line">            <span class="keyword">return</span> a&gt;<span class="number">0</span>&amp;&amp;b&gt;<span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">trans</span><span class="params">(String fromAccount, String toAccount, BigDecimal money)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//需要事务处理</span></span><br><span class="line">            <span class="keyword">int</span> a = accountMapper.reduceMoney(fromAccount,money);</span><br><span class="line">            <span class="keyword">int</span> c = <span class="number">1</span> / <span class="number">0</span>;<span class="comment">//出了异常，钱就没了</span></span><br><span class="line">            <span class="keyword">int</span> b = accountMapper.addMoney(toAccount,money);</span><br><span class="line">            <span class="keyword">return</span> a&gt;<span class="number">0</span>&amp;&amp;b&gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：<em>这里不要处理异常 ，否则事务不会回滚了</em></p>
+</blockquote>
 <p><code>@Transactional</code>注解的参数</p>
 <blockquote><h5 id="Transactional-注解的属性信息"><a href="#Transactional-注解的属性信息" class="headerlink" title="@Transactional 注解的属性信息"></a>@Transactional 注解的属性信息</h5><footer><strong>刘万振</strong><cite><a href="https://www.ibm.com/developerworks/cn/java/j-master-spring-transactional-use/index.html" target="_blank" rel="noopener">透彻的掌握 Spring 中@transactional 的使用</a></cite></footer></blockquote>
 <table>
@@ -140,11 +143,23 @@
 <p>如果你希望所有方法都加上事务，那么你可以在类上使用@Transactional</p>
 <p>注意：@Transactional只有应用在public方法才有效</p>
 <p>不要在同一个类里使用没有用@Transactional修饰的方法去用@Transactional修饰的方法,因为@Transactional会被忽略</p>
+<h2 id="2-传统配置文件"><a href="#2-传统配置文件" class="headerlink" title="2.传统配置文件"></a>2.传统配置文件</h2><figure class="highlight coffee"><figcaption><span>: ​</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!--jdbc事务管理器 适用于mybatis 和jdbc--&gt;</span><br><span class="line">&lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;</span><br><span class="line">    &lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"druidDataSource"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--aop事务 如果事务管理器的id是PlatformTransactionManager 可以不手动指定transaction-manager--&gt;</span><br><span class="line">&lt;tx:advice id=<span class="string">"txAdvice"</span> transaction-manager=<span class="string">"transactionManager"</span>&gt;</span><br><span class="line">    &lt;tx:attributes&gt;</span><br><span class="line">        &lt;tx:method name=<span class="string">"trans"</span> isolation=<span class="string">"DEFAULT"</span> propagation=<span class="string">"REQUIRED"</span>/&gt;</span><br><span class="line">    &lt;/tx:attributes&gt;</span><br><span class="line">&lt;/tx:advice&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--com.liu.service 和子包里的方法--&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:pointcut id=<span class="string">"pc1"</span> expression=<span class="string">"within(com.liu.service..*)"</span>/&gt;</span><br><span class="line">    &lt;aop:advisor advice-ref=<span class="string">"txAdvice"</span> pointcut-ref=<span class="string">"pc1"</span>/&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>&lt;aop:pointcut /&gt; expression表达式的写法</strong></p>
+<p><code>within(com.liu.service..*)</code>表示com.liu.service 和所有子包里的方法</p>
+<p>还可以这样写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execution(* com.liu.service.Impl.*.*(..))</span><br></pre></td></tr></table></figure>
+<p>表示作用在com.liu.service.Impl下的所有类的所有方法</p>
+<p>或者</p>
+<p><code>execution(* com.liu.service..*.*(..))</code></p>
+<p>com.liu.service包和子包下的所有方法</p>
+<p>或者</p>
+<p><code></code> execution(<em> com.liu.service.Impl.AccountServiceImpl.</em>(..))`</p>
+<p>表示作用在com.liu.service.Impl.AccountServiceImpl类的所有方法</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/30/Spring声明式事务/" data-id="cjypwhuen0005p0wunnni4gsw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/30/Spring声明式事务/" data-id="cjysrd0gl0003f8wunh4vtvws" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring声明式事务-事务/">spring声明式事务 事务</a></li></ul>
