@@ -5,20 +5,23 @@
   
 
   
-  <title>java杂记 | stay hungry ,stay foolish</title>
+  <title>redis安装 | stay hungry ,stay foolish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="java杂记">
-<meta name="keywords" content="杂记">
+  <meta name="description" content="redis linux install">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java杂记">
-<meta property="og:url" content="http://yoursite.com/2019/04/25/java杂记/index.html">
+<meta property="og:title" content="redis安装">
+<meta property="og:url" content="http://yoursite.com/2019/08/14/redis安装/index.html">
 <meta property="og:site_name" content="stay hungry ,stay foolish">
-<meta property="og:description" content="java杂记">
+<meta property="og:description" content="redis linux install">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2019-05-26T06:25:45.774Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/14/redis安装/redis-server.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/14/redis安装/ping.png">
+<meta property="og:updated_time" content="2019-08-14T10:15:11.472Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java杂记">
-<meta name="twitter:description" content="java杂记">
+<meta name="twitter:title" content="redis安装">
+<meta name="twitter:description" content="redis linux install">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/14/redis安装/redis-server.png">
   
     <link rel="alternate" href="/atom.xml" title="stay hungry ,stay foolish" type="application/atom+xml">
   
@@ -65,16 +68,12 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-java杂记" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-redis安装" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/25/java杂记/" class="article-date">
-  <time datetime="2019-04-25T06:44:32.000Z" itemprop="datePublished">2019-04-25</time>
+    <a href="/2019/08/14/redis安装/" class="article-date">
+  <time datetime="2019-08-14T10:09:38.000Z" itemprop="datePublished">2019-08-14</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -83,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      java杂记
+      redis安装
     </h1>
   
 
@@ -91,29 +90,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>java杂记</p>
+        <p><strong>redis linux install</strong></p>
 <a id="more"></a>
-<ul>
-<li><p><strong>局部变量必须初始化后使用</strong>(静态和全局变量则可以直接使用)</p>
-</li>
-<li><p><strong>符号引用</strong>就是字符串，这个字符串包含足够的信息，以供实际使用时可以找到相应的位置。你比如说某个方法的符号引用，如：“java/io/PrintStream.println:(Ljava/lang/String;)V”。里面有类的信息，方法名，方法参数等信息。当第一次运行时，要根据字符串的内容，到该类的方法表中搜索这个方法。运行一次之后，符号引用会被替换为直接引用，下次就不用搜索了。直接引用就是偏移量，通过偏移量虚拟机可以直接在该类的内存区域中找到方法字节码的起始位置。</p>
-</li>
-</ul>
-<p>   类初始化时机：只有当对类的主动使用的时候才会导致类的初始化，类的主动使用包括以下六种：</p>
-<p>  – 创建类的实例，也就是new的方式</p>
-<p>  – 访问某个类或接口的静态变量，或者对该静态变量赋值</p>
-<p>  – 调用类的静态方法</p>
-<p>  – 反射（如Class.forName(“com.shengsiyuan.Test”)）</p>
-<p>  – 初始化某个类的子类，则其父类也会被初始化</p>
-<p>  – Java虚拟机启动时被标明为启动类的类（Java Test），直接使用java.exe命令来运行某个主类</p>
-
+<h1 id="1-下载"><a href="#1-下载" class="headerlink" title="1.下载"></a>1.下载</h1><p> wget <a href="http://download.redis.io/releases/redis-4.0.14.tar.gz（版本号可以更改）" target="_blank" rel="noopener">http://download.redis.io/releases/redis-4.0.14.tar.gz（版本号可以更改）</a></p>
+<h1 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h1><p> tar xzf redis-4.0.14.tar.gz</p>
+<h1 id="3-转到解压后的目录"><a href="#3-转到解压后的目录" class="headerlink" title="3.转到解压后的目录"></a>3.转到解压后的目录</h1><p> cd redis-4.0.14</p>
+<h1 id="4-安装"><a href="#4-安装" class="headerlink" title="4.安装"></a>4.安装</h1><p> make</p>
+<p>二进制文件被编译到src文件夹<br>可以转到src使用<code>./redis-server</code> 运行redis服务</p>
+<img src="/2019/08/14/redis安装/redis-server.png" title="安装成功">
+<p>你可以使用redis自带客户端连接redis<br>执行<code>./redis-cli</code><br>输入<code>ping</code>，可以看到返回 “PONG”，redis已经成功安装了</p>
+<img src="/2019/08/14/redis安装/ping.png">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/25/java杂记/" data-id="cjzb3mruw000apwwu7bzvy9yo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/14/redis安装/" data-id="cjzb3mruz000epwwujwexmlcd" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
 
     </footer>
   </div>
@@ -121,19 +114,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/05/24/如何插入图片/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          如何插入图片
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/25/article/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/07/30/Spring声明式事务/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">我的第一篇博客</div>
+      <div class="article-nav-title">Spring声明式事务</div>
     </a>
   
 </nav>
