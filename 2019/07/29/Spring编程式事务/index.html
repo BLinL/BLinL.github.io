@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>Spring编程式事务 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Monday, July 29th 2019, 9:54 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>spring事务初探</p>
+<a id="more"></a>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=683826&auto=1&height=66"></iframe>
+
+<h2 id="什么是事务："><a href="#什么是事务：" class="headerlink" title="什么是事务："></a>什么是事务：</h2><p>一组操作，要么全部执行，要么全部不执行</p>
+<p>常见场景，银行转账</p>
+<h2 id="事物的特性：ACID"><a href="#事物的特性：ACID" class="headerlink" title="事物的特性：ACID"></a>事物的特性：ACID</h2><ul>
+<li>原子性</li>
+<li>一致性</li>
+<li>隔离性</li>
+<li>持久性</li>
+</ul>
+<p>实际情况下一一般不会全部保证</p>
+<h2 id="事物的属性："><a href="#事物的属性：" class="headerlink" title="事物的属性："></a>事物的属性：</h2><p>隔离级别 ：多个事务同时下的控制，越高越能保证ACID，但是性能随之下降</p>
+<p>传播行为 ：事务服务之间相互调用，事务传播行为用来描述由某一个事务传播行为修饰的方法被嵌套进另一个方法的时事务如何传播</p>
+<p>是否只读 ：事务内不允许修改操作，此时再进行写操作会出现错误</p>
+<p>事务超时 ：事务允许执行的最长时间，如果超过这个时间还没完成则自动回滚</p>
+<p>回滚规则 ：事务的回滚规则</p>
+<h2 id="事物的隔离级别："><a href="#事物的隔离级别：" class="headerlink" title="事物的隔离级别："></a>事物的隔离级别：</h2><p>读未提交</p>
+<p>读已提交</p>
+<p>可重复读</p>
+<p>序列化</p>
+<p><strong>TransactionDefinition.ISOLATION_READ_UNCOMMITTED:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></p>
+<p><strong>TransactionDefinition.ISOLATION_READ_COMMITTED:</strong> 允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong></p>
+<p><strong>TransactionDefinition.ISOLATION_REPEATABLE_READ:</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生。</strong></p>
+<p><strong>TransactionDefinition.ISOLATION_SERIALIZABLE:</strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</p>
+<h2 id="事物的传播行为："><a href="#事物的传播行为：" class="headerlink" title="事物的传播行为："></a>事物的传播行为：</h2><p>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播。例如：方法可能继续在现有事务中运行，也可能开启一个新事务，并在自己的事务中运行。在TransactionDefinition定义中包括了如下几个表示传播行为的常量：</p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_REQUIRED：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
+<li><strong>TransactionDefinition.PROPAGATION_SUPPORTS：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><p><strong>TransactionDefinition.PROPAGATION_MANDATORY：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）</p>
+</li>
+<li><p><strong>TransactionDefinition.PROPAGATION_REQUIRES_NEW：</strong> 创建一个新的事务，如果当前存在事务，则把当前事务挂起。</p>
+</li>
+<li><strong>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：</strong> 以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><strong>TransactionDefinition.PROPAGATION_NEVER：</strong> 以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+</ul>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_NESTED：</strong> 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。</li>
+</ul>
+<h2 id="spring事务-编程式"><a href="#spring事务-编程式" class="headerlink" title="spring事务(编程式)"></a>spring事务(编程式)</h2><p>三个主要接口</p>
+<p><strong>1. TransactionDefinition：</strong> TransactionDefinition定义事务，它包含了事务的静态属性，比如：事务传播行为、超时时间等等。Spring 为我们提供了一个默认的实现类：DefaultTransactionDefinition，该类适用于大多数情况</p>
+<p><strong>2. PlatformTransactionManager： </strong>PlatformTransactionManager 用于执行具体的事务操作</p>
+<pre><code class="java">Public interface PlatformTransactionManager{
+    TransactionStatus getTransaction(TransactionDefinition definition)
+    throws TransactionException;
+    void commit(TransactionStatus status)throws TransactionException;
+    void rollback(TransactionStatus status)throws TransactionException;
+}
+</code></pre>
+<blockquote><p>根据底层所使用的不同的持久化 API 或框架，PlatformTransactionManager 的主要实现类大致如下：</p>
+<ul>
+<li>DataSourceTransactionManager：适用于使用JDBC和iBatis进行数据持久化操作的情况。</li>
+<li>HibernateTransactionManager：适用于使用Hibernate进行数据持久化操作的情况。</li>
+<li>JpaTransactionManager：适用于使用JPA进行数据持久化操作的情况。</li>
+<li>另外还有JtaTransactionManager 、JdoTransactionManager、JmsTransactionManager等</li>
+</ul>
+</blockquote>
+<p><strong>3. TransactionStatus：</strong> 事物的状态</p>
+<pre><code class="java">public  interface TransactionStatus{
+    boolean isNewTransaction();
+    void setRollbackOnly();
+    boolean isRollbackOnly();
+}
+</code></pre>
+<h2 id="下面是实例讲解"><a href="#下面是实例讲解" class="headerlink" title="下面是实例讲解"></a>下面是实例讲解</h2><p>使用mysql、Spring、mybatis</p>
+<p>首先创建数据库，使用mysql</p>
+<img src="/2019/07/29/Spring编程式事务/table.png">
+<pre><code class="sql">CREATE TABLE `account` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `accountName` varchar(20) DEFAULT NULL,
+   `money` decimal(10,2) DEFAULT NULL,
+   `password` varchar(20) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+</code></pre>
+<p>创建实体类</p>
+<pre><code class="java">package com.liu.pojo;
+
+import java.math.BigDecimal;
+
+public class Account {
+    private int id;
+    private String accountName;
+    private BigDecimal money;
+    private String password;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+</code></pre>
+<p>创建mapper接口</p>
+<pre><code class="java">package com.liu.mapper;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+
+public interface AccountMapper {
+
+    int addMoney(@Param(&quot;accountName&quot;) String accountName,@Param(&quot;money&quot;) BigDecimal money);
+
+    int reduceMoney(@Param(&quot;accountName&quot;) String accountName,@Param(&quot;money&quot;) BigDecimal money);
+
+}
+
+</code></pre>
+<p>创建mapper映射文件</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.liu.mapper.AccountMapper&quot;&gt;
+    &lt;update id=&quot;addMoney&quot; parameterType=&quot;java.math.BigDecimal&quot;&gt;
+         update account set money = money + ${money}
+         where accountName = #{accountName}
+
+    &lt;/update&gt;
+
+    &lt;update id=&quot;reduceMoney&quot; parameterType=&quot;java.math.BigDecimal&quot;&gt;
+         update account set money = money - ${money}
+         where accountName = #{accountName}
+
+    &lt;/update&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+<p>service层</p>
+<pre><code class="java">package com.liu.service;
+
+import java.math.BigDecimal;
+
+public interface AccountService {
+
+    //转账
+    boolean trans(String fromAccount, String toAccount, BigDecimal money);
+}
+
+</code></pre>
+<p>service实现类</p>
+<p>调用Transaction的execute方法</p>
+<p>execute方法的参数是TransactionCallback接口，一般我们使用匿名类来直接实现</p>
+<p>将需要进行事务处理的代码放进 TransactionCallback接口方法 doInTransaction中</p>
+<p>doInTransaction方法有一个TransactionStatus 类型参数</p>
+<p>发生运行时异常时调用transactionStatus.setRollbackOnly()方法，对事物进行回滚</p>
+<p>直接看代码：</p>
+<pre><code class="java">package com.liu.service.Impl;
+
+import com.liu.mapper.AccountMapper;
+import com.liu.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.math.BigDecimal;
+
+@Service
+public class AccountServiceImpl implements AccountService {
+
+    @Autowired
+    private AccountMapper accountMapper;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    @Override
+    public boolean trans(String fromAccount, String toAccount, BigDecimal money) {
+
+        /**
+         * 对于不需要返回值的情况
+         * TransactionCallback 接口有一个子接口 TransactionCallbackWithoutResult
+         * 或者直接TransactionCallback返回无意义的值
+         * */
+        return  transactionTemplate.execute(new TransactionCallback&lt;Boolean&gt;(){
+            @Override
+            public Boolean doInTransaction(TransactionStatus transactionStatus) {
+                boolean result;
+                try{
+                    //需要事务
+                    int a = accountMapper.reduceMoney(fromAccount,money);
+                    int c = 1 / 0;//出了异常，钱就没了
+                    int b = accountMapper.addMoney(toAccount,money);
+                    result =  a&gt;0&amp;&amp;b&gt;0;
+                }catch (Exception e){
+                    transactionStatus.setRollbackOnly();//回滚
+                    result = false;
+                    e.printStackTrace();
+                }
+                return result;
+            }
+        });
+    }
+}
+
+</code></pre>
+<p>配置文件：</p>
+<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mybatis=&quot;http://mybatis.org/schema/mybatis-spring&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://mybatis.org/schema/mybatis-spring
+       http://mybatis.org/schema/mybatis-spring.xsd&quot;&gt;
+
+
+    &lt;context:property-placeholder location=&quot;classpath:properties/jdbc.properties&quot;/&gt;
+
+    &lt;context:component-scan base-package=&quot;com.liu&quot;/&gt;
+
+    &lt;bean id=&quot;druidDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+        &lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot;/&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;${jdbc.driver}&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;bean class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot; id=&quot;sqlSessionFactory&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;druidDataSource&quot;/&gt;
+        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis/SqlMapConfig.xml&quot;/&gt;
+        &lt;!--mapperLocations - 如果MyBatis映射器XML文件在和映射器类在不同路径下则需要配置--&gt;
+        &lt;!--&lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:com/liu/mymapper/*.xml&quot; /&gt;--&gt;
+    &lt;/bean&gt;
+
+    &lt;!--&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;--&gt;
+        &lt;!--&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot;/&gt;--&gt;
+        &lt;!--&lt;property name=&quot;basePackage&quot; value=&quot;com.liu.mapper&quot;/&gt;--&gt;
+    &lt;!--&lt;/bean&gt;--&gt;
+
+    &lt;!--or --&gt;
+    &lt;mybatis:scan base-package=&quot;com.liu.mapper&quot;/&gt;
+
+    &lt;!--jdbc事务--&gt;
+    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;constructor-arg ref=&quot;druidDataSource&quot; /&gt;
+    &lt;/bean&gt;
+
+    &lt;!--事务模板 --&gt;
+    &lt;bean name=&quot;TransactionTemplate &quot; class=&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;
+        &lt;property name=&quot;transactionManager&quot; ref=&quot;transactionManager&quot;/&gt;
+        &lt;property name=&quot;isolationLevelName&quot; value=&quot;ISOLATION_REPEATABLE_READ&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>测试类：</p>
+<pre><code class="java">package com.liu;
+
+import com.liu.mapper.AccountMapper;
+import com.liu.service.AccountService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.math.BigDecimal;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(&quot;classpath:spring/applicationContext.xml&quot;)
+public class TestTranscation {
+
+    @Autowired
+    private AccountService accountService;
+
+    @Test
+    public void test(){
+        boolean f = accountService.trans(&quot;lisi&quot;, &quot;zhangsan&quot;, BigDecimal.valueOf(100));
+        System.out.println(f);
+    }
+
+}
+</code></pre>
+<p>我们让lisi给zhangsan转账100元，但是由于转账过程中抛出异常，</p>
+<p>我已经执行了setRollbackOnly()操作，所以事务回滚，钱并不会转出</p>
+<p>思维导图</p>
+<img src="/2019/07/29/Spring编程式事务/Transa.jpg">
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/%E4%BA%8B%E5%8A%A1%EF%BC%8C%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1">事务，编程式事务</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "Spring编程式事务&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

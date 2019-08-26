@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>[基础]SSM框架搭建 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Tuesday, July 9th 2019, 11:46 am</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>spring + springMVC + Mybatis框架搭建</p>
+<a id="more"></a>
+<p>使用Maven搭建项目，如下图所示</p>
+<img src="/2019/07/09/基础-SSM框架搭建/project.PNG" title="this is an image">
+<p>添加依赖</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.liu&lt;/groupId&gt;
+    &lt;artifactId&gt;SSM-Demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;5.1.8.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;5.1.41&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!--jdbc--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+            &lt;version&gt;5.1.8.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;druid&lt;/artifactId&gt;
+            &lt;version&gt;1.1.12&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+            &lt;version&gt;2.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.5.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+            &lt;version&gt;5.1.5.RELEASE&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+
+        &lt;!--servlet api--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;3.1.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+
+
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;!--加载 mapper.xml--&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/java&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.properties&lt;/include&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                &lt;/includes&gt;
+                &lt;filtering&gt;false&lt;/filtering&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.5.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;encoding&gt;utf-8&lt;/encoding&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+
+
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+                &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.2&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;port&gt;8080&lt;/port&gt;
+                    &lt;path&gt;/&lt;/path&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+
+
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+<p>在main底下新建webapp文件夹，作为web目录。继续新建WEB-INF文件夹，添加web.xml文件</p>
+<p>在数据库中创建Student表</p>
+<img src="/2019/07/09/基础-SSM框架搭建/table.PNG" title="this is an image">
+<p>创建对应的实体类Student</p>
+<pre><code class="java">package com.liu.pojo;
+
+public class Student {
+    private int id;
+    private String name;
+    private String tel;
+
+    public Student(int id, String name, String tel) {
+        this.id = id;
+        this.name = name;
+        this.tel = tel;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Student{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, tel=&#39;&quot; + tel + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}
+
+</code></pre>
+<p>新建mapper包，添加StudentMapper接口</p>
+<pre><code class="java">package com.liu.mapper;
+
+import com.liu.pojo.Student;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface StudentMapper {
+    List&lt;Student&gt; selectAll();
+    Student selectByID(Integer id);
+}
+
+</code></pre>
+<p>在mapper接口的包下创建StudentMapper.xml（同名）</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.liu.mapper.StudentMapper&quot;&gt;
+
+    &lt;select id=&quot;selectAll&quot; resultType=&quot;student&quot;&gt;
+        select * from student
+    &lt;/select&gt;
+
+    &lt;select id=&quot;selectByID&quot; resultType=&quot;student&quot;&gt;
+        select * from student
+        where id = #{id}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<p>写全类名太麻烦？这样配置后<code>resultType</code> 和 <code>resultType</code>就可以只写类名了（不区分大小写）</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt;
+    &lt;typeAliases&gt;
+        &lt;package name=&quot;com.liu.pojo&quot;/&gt;
+    &lt;/typeAliases&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>创建StudentService 和 StudentServiceImpl实现类</p>
+<p>StudentService：</p>
+<pre><code class="java">package com.liu.service.Impl;
+
+import com.liu.pojo.Student;
+
+import java.util.List;
+
+public interface StudentService {
+    List&lt;Student&gt; getAll();
+
+    Student getByID(Integer id);
+}
+
+</code></pre>
+<p>StudentServiceImpl：</p>
+<pre><code class="java">package com.liu.service;
+
+import com.liu.mapper.StudentMapper;
+import com.liu.pojo.Student;
+import com.liu.service.Impl.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StudentServiceImpl implements StudentService {
+
+
+    private StudentMapper studentMapper;
+
+    @Autowired
+    public void setStudentMapper(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
+    }
+
+    @Override
+    public List&lt;Student&gt; getAll() {
+        List&lt;Student&gt; stulist = studentMapper.selectAll();
+        return stulist;
+    }
+
+    @Override
+    public Student getByID(Integer id) {
+        Student student = studentMapper.selectByID(id);
+        return student;
+    }
+}
+
+</code></pre>
+<p>在 <code>Resource</code> 文件夹下配置新建<code>spring</code>文件夹，添加spring的ApplicationContext</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mybatis=&quot;http://mybatis.org/schema/mybatis-spring&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://mybatis.org/schema/mybatis-spring
+       http://mybatis.org/schema/mybatis-spring.xsd&quot;&gt;
+
+    &lt;!-- 加载jdbc配置--&gt;
+    &lt;context:property-placeholder location=&quot;classpath:properties/jdbc.properties&quot;/&gt;
+
+    &lt;!--自动注入的扫描 --&gt;
+    &lt;context:component-scan base-package=&quot;com.liu&quot;/&gt;
+
+    &lt;!-- 数据源 --&gt;
+    &lt;bean id=&quot;druidDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+        &lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot;/&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;${jdbc.driver}&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- mybatis SqlSessionFactoryBean--&gt;
+    &lt;bean class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot; id=&quot;sqlSessionFactory&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;druidDataSource&quot;/&gt;
+        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis/SqlMapConfig.xml&quot;/&gt;
+        &lt;!--mapperLocations - 如果MyBatis映射器XML文件在和映射器类在不同路径下则需要配置--&gt;
+        &lt;!--&lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:com/liu/mymapper/*.xml&quot; /&gt;--&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- mapper扫描 不配置或错误配置会导致mapper无法注入--&gt;
+    &lt;!--&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;--&gt;
+        &lt;!--&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot;/&gt;--&gt;
+        &lt;!--&lt;property name=&quot;basePackage&quot; value=&quot;com.liu.mapper&quot;/&gt;--&gt;
+    &lt;!--&lt;/bean&gt;--&gt;
+
+    &lt;!--or --&gt;
+    &lt;mybatis:scan base-package=&quot;com.liu.mapper&quot;/&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>OK，写一个测试类测试一下</p>
+<pre><code class="java">package com.liu;
+
+
+import com.liu.pojo.Student;
+import com.liu.service.Impl.StudentService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(value = &quot;classpath:spring/applicationContext.xml&quot;)
+public class TestMbatis {
+
+    @Autowired
+    private StudentService studentService;
+
+    @Test
+    public void testSelectAll(){
+        List&lt;Student&gt; studentList = studentService.getAll();
+        System.out.println(studentList);
+    }
+}
+
+
+</code></pre>
+<p>运行结果：</p>
+<img src="/2019/07/09/基础-SSM框架搭建/test.PNG" title="this is an image">
+<p>数据已经取出来啦~~</p>
+<p>接下来我们要改为一个web项目</p>
+<p>新建<code>controller</code> 包，新建StudentController 控制器类</p>
+<pre><code class="java">package com.liu.controller;
+
+import com.liu.pojo.Student;
+import com.liu.service.Impl.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class StudentController {
+
+
+    @Autowired
+    private StudentService studentService;
+
+    @RequestMapping(&quot;student/getdata&quot;)
+    @ResponseBody
+    public String getData(){
+        Student student = studentService.getByID(1);
+        return student.toString();
+    }
+}
+
+
+</code></pre>
+<p>添加 spring-web 配置文件</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+&quot;&gt;
+
+    &lt;context:component-scan base-package=&quot;com.liu.controller&quot;/&gt;
+    &lt;mvc:annotation-driven /&gt;
+
+    &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp&quot;/&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+
+</code></pre>
+<p>在web.xml配置前端控制器</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;
+         version=&quot;3.1&quot;&gt;
+
+    &lt;display-name&gt;myweb&lt;/display-name&gt;
+
+    &lt;!-- 加载spring上下文--&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:spring/applicationContext.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+
+    &lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+
+   &lt;!--前端控制器 --&gt;
+   &lt;servlet&gt;
+       &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;
+       &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+       &lt;init-param&gt;
+           &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+           &lt;param-value&gt;classpath:spring/spring-*.xml&lt;/param-value&gt;
+       &lt;/init-param&gt;
+   &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+    &lt;!--This filter can either apply its encoding if the request does not already specify an encoding, or enforce this filter&#39;s encoding in any case (&quot;forceEncoding&quot;=&quot;true&quot;)--&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;characterEncoding&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;utf-8&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;characterEncoding&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;welcome-file-list&gt;
+        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+    &lt;/welcome-file-list&gt;
+
+&lt;/web-app&gt;
+
+</code></pre>
+<p>在webapp下创建Index.jsp文件</p>
+<pre><code class="html">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;哈哈&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+
+</code></pre>
+<p>接下来运行项目，由于我已经添加了<code>tomcat7</code>插件，因此使用插件运行</p>
+<p>第一步：</p>
+<img src="/2019/07/09/基础-SSM框架搭建/maven1.PNG" title="this is an image">
+<p>第二步：</p>
+<img src="/2019/07/09/基础-SSM框架搭建/maven2.png" title="this is an image">
+<p>第三步：</p>
+<img src="/2019/07/09/基础-SSM框架搭建/maven3.png" title="this is an image">
+<p>OK,点击运行</p>
+<img src="/2019/07/09/基础-SSM框架搭建/maven4.png" title="this is an image">
+<p>打开浏览器：输入 <code>localhost:8080</code></p>
+<img src="/2019/07/09/基础-SSM框架搭建/browser1.png" title="this is an image">
+<p>输入 <code>localhost:8080/student/getdata</code></p>
+<img src="/2019/07/09/基础-SSM框架搭建/browser.png" title="this is an image">
+<p>小白，欢迎大家留言讨论~</p>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/SSM%20Mybatis">SSM Mybatis</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "[基础]SSM框架搭建&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

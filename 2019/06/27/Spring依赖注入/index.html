@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>Spring依赖注入 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Thursday, June 27th 2019, 5:39 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>介绍依赖注入的两种方式和复杂类型注入</p>
+<a id="more"></a>
+<h1 id="Spring-依赖注入-Dependency-Injection"><a href="#Spring-依赖注入-Dependency-Injection" class="headerlink" title="Spring 依赖注入(Dependency Injection)"></a>Spring 依赖注入(Dependency Injection)</h1><h2 id="2-种方式："><a href="#2-种方式：" class="headerlink" title="2 种方式："></a>2 种方式：</h2><ol>
+<li>构造函数注入</li>
+<li>setter方法注入</li>
+</ol>
+<p>实体类</p>
+<pre><code class="java">package com.liu.pojo;
+
+public class Student {
+    private String name;
+    private String tel;
+
+    public Student(){
+        System.out.println(&quot;student 创建了&quot;);
+    }
+
+    public Student(String name, String tel) {
+        this.name = name;
+        this.tel = tel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Student{&quot; +
+                &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, tel=&#39;&quot; + tel + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}
+
+</code></pre>
+<p>构造函数注入 application.xml</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+    &lt;bean id=&quot;Student&quot; class=&quot;com.liu.pojo.Student&quot; scope=&quot;singleton&quot;&gt;
+        &lt;constructor-arg name=&quot;name&quot; value=&quot;wangwu&quot;&gt;&lt;/constructor-arg&gt;
+        &lt;constructor-arg name=&quot;tel&quot; value=&quot;121201212012&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+
+</code></pre>
+<p>测试</p>
+<pre><code class="java">package com.liu.test;
+
+import com.liu.pojo.Student;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(&quot;/application.xml&quot;)
+public class BeanCreateTest {
+
+    @Autowired
+    Student student;
+
+    @Test
+    public void testBean(){
+        System.out.println(student);
+    }
+
+}
+
+</code></pre>
+<p>setter 注入</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+    &lt;bean id=&quot;Student&quot; class=&quot;com.liu.pojo.Student&quot; scope=&quot;singleton&quot;&gt;
+        &lt;property name=&quot;name&quot; value=&quot;lisi&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;tel&quot; value=&quot;123782173&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>最好使用sette注入而不是构造方法注入的方式，当你不知道要注入哪些参数时，你不得不写多个构造函数。</p>
+<h2 id="复杂类型注入"><a href="#复杂类型注入" class="headerlink" title="复杂类型注入"></a>复杂类型注入</h2><p>例如：数组、List、Set、Map</p>
+<p>为Student加入新的字段和setter方法</p>
+<pre><code class="java">private List&lt;String&gt; course;
+
+public void setCourse(List&lt;String&gt; course) {
+      this.course = course;
+}
+</code></pre>
+<p>数组、List、Set 类型参数都可以使用同一种方式注入</p>
+<pre><code class="xml"> &lt;bean id=&quot;Student&quot; class=&quot;com.liu.pojo.Student&quot; scope=&quot;singleton&quot;&gt;
+        &lt;property name=&quot;name&quot; value=&quot;lisi&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;tel&quot; value=&quot;123782173&quot;&gt;&lt;/property&gt;
+
+        &lt;property name=&quot;course&quot;&gt;
+            &lt;list&gt; &lt;!--可替换为&lt;set&gt;或&lt;array&gt;--&gt;
+                &lt;value&gt;java&lt;/value&gt;
+                &lt;value&gt;c++&lt;/value&gt;
+                &lt;value&gt;mysql&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+ &lt;/bean&gt;
+</code></pre>
+<p>Map 类型参数注入</p>
+<p>为Student加入新的字段和setter方法</p>
+<pre><code class="java"> private Map&lt;String,Integer&gt; score;
+ public void setScore(Map&lt;String, Integer&gt; score) {
+     this.score = score;
+ }
+</code></pre>
+<p>配置文件</p>
+<pre><code class="java"> &lt;property name=&quot;score&quot;&gt;
+            &lt;map key-type=&quot;java.lang.String&quot; value-type=&quot;java.lang.Integer&quot;&gt;
+                &lt;entry key=&quot;语文&quot; value=&quot;100&quot;/&gt;
+                &lt;entry key=&quot;数学&quot; value=&quot;100&quot;/&gt;
+                &lt;entry key=&quot;外语&quot; value=&quot;100&quot;/&gt;
+            &lt;/map&gt;
+ &lt;/property&gt;
+</code></pre>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                                <p>
+                                    <i class="iconfont icon-inbox"></i>
+                                    
+                                        <a class="hover-with-bg" href="/categories/spring">spring</a>
+                                        &nbsp;
+                                    
+                                </p>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/spring">spring</a>
+                                
+                                    <a class="hover-with-bg" href="/tags/DI">DI</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "Spring依赖注入&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

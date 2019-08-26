@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>Git 常用命令 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Wednesday, June 19th 2019, 8:38 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>git 简单使用介绍</p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote><p>git 是一个分布式的版本管理系统，最初由linux的开发者<strong>Linus Benedict Torvalds</strong>创建。</p>
+</blockquote>
+<h3 id="简单配置"><a href="#简单配置" class="headerlink" title="简单配置"></a>简单配置</h3><pre><code>git config --global user.name &quot;your name&quot;
+git config --global user.email &quot;your_email@youremail.com&quot;
+</code></pre><p>让 Git 知道你是谁</p>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ul>
+<li>初始化仓库</li>
+</ul>
+<pre><code>git init
+</code></pre><p>进入要进行版本控制的文件夹，打开<code>git bash</code>,输入以上命令。这样你就在本地创建了一个仓库。</p>
+<p>现在让我们向本地仓库添加一个文件——readme.txt,并写入 git is a version controll.</p>
+<p>现在我们把他添加至“暂存区”</p>
+<ul>
+<li>保存改动至“暂存区”</li>
+</ul>
+<pre><code>git add &lt;filename&gt; //git add readme.txt
+git add * // 当你修改了多个文件时你可以使用系命令一次性添加
+</code></pre><p>如果不懂暂存区是什么也没有关系。<br>保存至“暂存区”并不意味着提交，因此你需要使用下面的命令提交你的修改。</p>
+<ul>
+<li>提交修改</li>
+</ul>
+<pre><code>git commit -m &quot;commit message&quot;
+git commit -m &quot;添加了readme.txt&quot; //-m 参数后面写改动的内容
+</code></pre><p>这样你就完成了本地仓库的一次提交</p>
+<ul>
+<li>查看信息</li>
+</ul>
+<pre><code>git status
+</code></pre><p>你会看到如下输出</p>
+<pre><code>On branch master //当前master分支，也是git默认创建出来的分支
+nothing to commit, working tree clean
+</code></pre><ul>
+<li>创建新的分支</li>
+</ul>
+<pre><code>git branch 
+git branch testing
+</code></pre><p>或者</p>
+<pre><code>git checkout -b &quot;branch name&quot; //创建分支并切换到新创建的分支
+</code></pre><p>创建testing分支</p>
+<ul>
+<li>查看分支</li>
+</ul>
+<pre><code>git branch -a
+</code></pre><pre><code>* master
+  testing
+//* 表示当前分支
+</code></pre><ul>
+<li>切换分支</li>
+</ul>
+<pre><code>git checkout &quot;branch name&quot;
+git checkout &quot;testing&quot;
+</code></pre><p>我们在testing分支继续修改readme.txt文件,添加“I am Iron man”<br>使用 add&amp;commit 命令 保存和提交</p>
+<ul>
+<li>查看提交信息</li>
+</ul>
+<pre><code>git log
+</code></pre><p>这个命令可以使你看到历史修改信息</p>
+<p>现在我们再次切换回 master 分支</p>
+<pre><code>git checkout master
+</code></pre><p>你发现了什么？——readme.txt 里还是最初添加的内容<br>我们可以得出这样的结论，不同分支间的内热是互不影响的</p>
+<ul>
+<li>合并分支</li>
+</ul>
+<pre><code>git checkout master
+git merge testing // 把testing 分支合并到 master 分支
+</code></pre><p>将在 testing 分支的修改合并到master 分支，这样两个分支的版本就一致了<br>Fast-forward 表示没有冲突</p>
+<ul>
+<li>删除分支</li>
+</ul>
+<pre><code>git branch
+git branch -d &quot;testing&quot;
+</code></pre><ul>
+<li>合并冲突</li>
+</ul>
+<pre><code>git merge 
+</code></pre><p>只保留你想要留下的改动<br>使用 <code>git add</code> 表明你已经解决了冲突<br>使用 <code>git commit</code> 提交</p>
+<ul>
+<li>删除分支</li>
+</ul>
+<pre><code>git branch -d
+git branch -d &quot;testing&quot;
+</code></pre><hr>
+<h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><p>日常操作中我们都可能会有犯错误的时候，这时该怎么办?</p>
+<p>别紧张，git早就猜到，所以可以帮助你撤销操作。</p>
+<p>我们修改readme.txt，添加如下内容</p>
+<p><strong>“fuck life”</strong></p>
+<p>当你在修改完之后心想：“奥，我的上帝~，我不该这么消极”，于是你想撤销修改</p>
+<pre><code class="git">git checkout filename
+git checkout .
+</code></pre>
+<p>此方法适用于修改而未add，实测可以不加<code>--</code>也能修改</p>
+<p>当你不小心已执行add，也没有关系，我们使用<code>git status</code>查看状态，发现一条提示</p>
+<img src="/2019/06/19/Git-常用命令/unstage.png">
+<pre><code class="git">git reset HEAD &lt;file&gt;
+</code></pre>
+<p>我们执行<code>git reset HEAD readme.txt</code>,效果如下所示</p>
+<img src="/2019/06/19/Git-常用命令/unmodified.png">
+<p>执行<code>git status</code>我们发现，readme.txt文件回到了modified状态，wow aswsome!</p>
+<p>此时你依然使用<code>git checkout readme.txt</code>去撤销工作区中文件内容的修改</p>
+<p><strong>提示</strong></p>
+<p>当add了多个文件，如果想撤销全部使用<code>git reset HEAD .</code></p>
+<p>此时由于你粗心，可能在commit操作完成后你才发现大事不妙，这时该怎么办呢？</p>
+<p>不要慌，我们先来看一下情况，使用<code>git log</code>查看历史commit操作</p>
+<img src="/2019/06/19/Git-常用命令/--hard.png">
+<p>我们发现每个commit后有一串黄色的看不懂的字符串，它就是commit id，你也不需要看懂，只是记录标记提交而已</p>
+<p>接下来我们就通过commit id回到过去</p>
+<pre><code class="git">git reset --hard &lt;commit id&gt;
+</code></pre>
+<p>你只需使用commit id的前几位即可</p>
+<blockquote>
+<p>版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本号，就无法确定是哪一个了。 ——廖雪峰老师的官网</p>
+</blockquote>
+<p>我们再查看一下readme.txt里面的内容，你会发现回到了原始状态</p>
+<p>如果只是回退到上一次commit版本，可以这样</p>
+<pre><code class="git">git reset --hard HEAD^
+</code></pre>
+<p>我们再设想一下，今天回退到了某一个版本，可是第二天后悔了该怎么办？</p>
+<p>此时你可以使用</p>
+<pre><code>git reflog
+</code></pre><img src="/2019/06/19/Git-常用命令/reflog.png">
+<p>可以发现git帮你记住了每一次命令，你又可以愉快地回到你想要的版本了</p>
+<blockquote>
+<ul>
+<li><p><code>HEAD</code>指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。</p>
+</li>
+<li><p>穿梭前，用<code>git log</code>可以查看提交历史，以便确定要回退到哪个版本。</p>
+</li>
+<li><p>要重返未来，用<code>git reflog</code>查看命令历史，以便确定要回到未来的哪个版本。</p>
+<p>​                                                                                                                                         ——廖雪峰老师的官网</p>
+</li>
+</ul>
+</blockquote>
+<p>小结：</p>
+<ol>
+<li><p>如果只是工作空间的撤销，只需<code>git checkout &lt;file&gt;</code></p>
+</li>
+<li><p>如果add到了暂存区，可以先使用<code>git reset HEAD &lt;file&gt;</code>,回到1，然后再对工作空间的修改进行撤销</p>
+</li>
+<li>如果已经commit到了版本库，可以<code>git reset --hard HEAD &lt;commitId&gt;</code>撤销操作</li>
+</ol>
+<p>现在头昏脑胀的你，不仅commit 还把错误的内容推送到了远程仓库，现在你真的完了。。</p>
+<p>工作区 简单来说新建的文件夹就是你的工作区</p>
+<p>版本库 git  add 后添加到版本库</p>
+<p>暂存区 git commit 添加至暂存区</p>
+<p><strong>远程仓库</strong></p>
+<img src="/2019/06/19/Git-常用命令/new_repo.png">
+<p>登录github点击“new”创建一个新的仓库</p>
+<p>填写Repository name 就是给仓库起个名字</p>
+<p>Description 是可选的</p>
+<p>默认是public</p>
+<p>点击“Create repository”确定后就创建了新的git仓库</p>
+<p>接下来你可以克隆这个远程仓库到本地</p>
+<pre><code class="git">git clone git@github.com:BLinL/test.git
+</code></pre>
+<p>现在本地的的仓库就和远程仓库关联上了</p>
+<p>远程仓库的名字默认叫origin</p>
+<p>你可以在本地添加文件或者修改</p>
+<p>然后推送到远程仓库</p>
+<pre><code>git push origin master
+</code></pre><p>你的同事也可以克隆这个仓库</p>
+<hr>
+<p>另一种情况是在本地已经存在一个仓库，你想将它放在github上</p>
+<p>同样的在github上创建新的仓库，步骤不再赘述</p>
+<p>接着把本地仓库和github上的仓库关联</p>
+<img src="/2019/06/19/Git-常用命令/push.png">
+<p>github已经给出了办法</p>
+<pre><code>git remote add origin git@github.com:BLinL/test2.git
+git push -u origin master
+</code></pre><p>-u 不仅会把本地仓库master分支内容推送到远程仓库master分支，而且会把本地master分支和远程master分支关联，仅在第一次推送需要</p>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                                <p>
+                                    <i class="iconfont icon-inbox"></i>
+                                    
+                                        <a class="hover-with-bg" href="/categories/version%20cintroll">version cintroll</a>
+                                        &nbsp;
+                                    
+                                </p>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/git">git</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "Git 常用命令&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

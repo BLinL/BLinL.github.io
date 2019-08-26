@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>Spring声明式事务 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Tuesday, July 30th 2019, 6:41 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>Spring 声明式事务介绍</p>
+<a id="more"></a>
+<h1 id="Spring-声明式事务"><a href="#Spring-声明式事务" class="headerlink" title="Spring 声明式事务"></a>Spring 声明式事务</h1><p>spring有两种处理事务的方式，编程式和声明式</p>
+<p>声明式事务主要使用AOP实现，它的优点是耦合度低</p>
+<p>声明式事务可以使用传统的<em>配置文件</em>或者<em>注解</em>实现</p>
+<h2 id="1-Transcation注解实现"><a href="#1-Transcation注解实现" class="headerlink" title="1.@Transcation注解实现"></a>1.@Transcation注解实现</h2><p>第一步：在xml文件中配置事务信息</p>
+<pre><code class="xml">&lt;!--注解驱动--&gt;
+&lt;tx:annotation-driven/&gt;
+&lt;!--jdbc事务管理器 适用于mybatis 和jdbc--&gt;
+&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;constructor-arg ref=&quot;DataSource&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>第二步：</p>
+<p>使用@Transcational注解，添加到合适的方法上</p>
+<pre><code class="java">@Transactional(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED)
+public boolean trans(String fromAccount, String toAccount, BigDecimal money) {
+            //需要事务处理
+            int a = accountMapper.reduceMoney(fromAccount,money);
+            int c = 1 / 0;//出了异常，钱就没了
+            int b = accountMapper.addMoney(toAccount,money);
+            return a&gt;0&amp;&amp;b&gt;0;
+}
+</code></pre>
+<blockquote>
+<p>注意：<em>这里不要处理异常 ，否则事务不会回滚了</em></p>
+</blockquote>
+<p><code>@Transactional</code>注解的参数</p>
+<blockquote><h5 id="Transactional-注解的属性信息"><a href="#Transactional-注解的属性信息" class="headerlink" title="@Transactional 注解的属性信息"></a>@Transactional 注解的属性信息</h5><footer><strong>刘万振</strong><cite><a href="https://www.ibm.com/developerworks/cn/java/j-master-spring-transactional-use/index.html" target="_blank" rel="noopener">透彻的掌握 Spring 中@transactional 的使用</a></cite></footer></blockquote>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td style="text-align:left">当在配置文件中有多个 TransactionManager , 可以用该属性指定选择哪个事务管理器。</td>
+</tr>
+<tr>
+<td>propagation</td>
+<td style="text-align:left">事务的传播行为，默认值为 REQUIRED。</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td style="text-align:left">事务的隔离度，默认值采用 DEFAULT。</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td style="text-align:left">事务的超时时间，默认值为-1。如果超过该时间限制但事务还没有完成，则自动回滚事务。</td>
+</tr>
+<tr>
+<td>read-only</td>
+<td style="text-align:left">指定事务是否为只读事务，默认值为 false；为了忽略那些不需要事务的方法，比如读取数据，可以设置 read-only 为 true。</td>
+</tr>
+<tr>
+<td>rollback-for</td>
+<td style="text-align:left">用于指定能够触发事务回滚的异常类型，如果有多个异常类型需要指定，各类型之间可以通过逗号分隔。</td>
+</tr>
+<tr>
+<td>no-rollback- for</td>
+<td style="text-align:left">抛出 no-rollback-for 指定的异常类型，不回滚事务。</td>
+</tr>
+</tbody>
+</table>
+<p>如果你希望所有方法都加上事务，那么你可以在类上使用@Transactional</p>
+<p>注意：@Transactional只有应用在public方法才有效</p>
+<p>不要在同一个类里使用没有用@Transactional修饰的方法去用@Transactional修饰的方法,因为@Transactional会被忽略</p>
+<h2 id="2-传统配置文件"><a href="#2-传统配置文件" class="headerlink" title="2.传统配置文件"></a>2.传统配置文件</h2><pre><code>
+&lt;!--jdbc事务管理器 适用于mybatis 和jdbc--&gt;
+&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+    &lt;property name=&quot;dataSource&quot; ref=&quot;druidDataSource&quot;&#x2F;&gt;
+&lt;&#x2F;bean&gt;
+
+&lt;!--aop事务 如果事务管理器的id是PlatformTransactionManager 可以不手动指定transaction-manager--&gt;
+&lt;tx:advice id=&quot;txAdvice&quot; transaction-manager=&quot;transactionManager&quot;&gt;
+    &lt;tx:attributes&gt;
+        &lt;tx:method name=&quot;trans&quot; isolation=&quot;DEFAULT&quot; propagation=&quot;REQUIRED&quot;&#x2F;&gt;
+    &lt;&#x2F;tx:attributes&gt;
+&lt;&#x2F;tx:advice&gt;
+
+&lt;!--com.liu.service 和子包里的方法--&gt;
+&lt;aop:config&gt;
+    &lt;aop:pointcut id=&quot;pc1&quot; expression=&quot;within(com.liu.service..*)&quot;&#x2F;&gt;
+    &lt;aop:advisor advice-ref=&quot;txAdvice&quot; pointcut-ref=&quot;pc1&quot;&#x2F;&gt;
+&lt;&#x2F;aop:config&gt;
+</code></pre>
+<p><strong>&lt;aop:pointcut /&gt; expression表达式的写法</strong></p>
+<p><code>within(com.liu.service..*)</code>表示com.liu.service 和所有子包里的方法</p>
+<p>还可以这样写</p>
+<pre><code class="java">execution(* com.liu.service.Impl.*.*(..))
+</code></pre>
+<p>表示作用在com.liu.service.Impl下的所有类的所有方法</p>
+<p>或者</p>
+<pre><code>execution(* com.liu.service..*.*(..))
+</code></pre><p>com.liu.service包和子包下的所有方法</p>
+<p>或者</p>
+<pre><code class="xml">
+execution(* com.liu.service.Impl.AccountServiceImpl.*(..))
+
+</code></pre>
+<p>表示作用在com.liu.service.Impl.AccountServiceImpl类的所有方法</p>
+<p>依赖:</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.liu&lt;/groupId&gt;
+    &lt;artifactId&gt;SSM-Demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;5.1.8.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;5.1.41&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!--jdbc--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+            &lt;version&gt;5.1.8.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;druid&lt;/artifactId&gt;
+            &lt;version&gt;1.1.12&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+            &lt;version&gt;2.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.5.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+            &lt;version&gt;5.1.5.RELEASE&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+
+        &lt;!--servlet api--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;3.1.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+            &lt;version&gt;1.2.47&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+            &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+            &lt;version&gt;1.7.4&lt;/version&gt;
+        &lt;/dependency&gt;
+
+
+
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;!--加载 mapper.xml--&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/java&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.properties&lt;/include&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                &lt;/includes&gt;
+                &lt;filtering&gt;false&lt;/filtering&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.5.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;encoding&gt;utf-8&lt;/encoding&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+
+
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+                &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.2&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;port&gt;8080&lt;/port&gt;
+                    &lt;path&gt;/&lt;/path&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+
+
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%20%E4%BA%8B%E5%8A%A1">spring声明式事务 事务</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "Spring声明式事务&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

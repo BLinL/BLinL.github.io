@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>hibernate 入门 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Thursday, July 18th 2019, 6:41 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>hibernate 简单入门</p>
+<a id="more"></a>
+<p>orm（<a href="https://en.wikipedia.org/wiki/Object-relational_mapping" target="_blank" rel="noopener">Object-Relational Mapping</a>）框架，dao层</p>
+<p>解决关系型数据库 和 面向对象程序设计之间冲突</p>
+<p>使你像操作对象一样操作数据库</p>
+<p>Get start with Demo</p>
+<ol>
+<li><p>导入hibernate require jar包 和 mysql 驱动</p>
+</li>
+<li><p>创建实体对象 User</p>
+<p>程序清单：</p>
+<pre><code class="java">package com.liu.pojo;
+
+public class User {
+    private int uid;
+    private String name;
+    private String password;
+
+    public int getUid() {
+        return uid;
+    }
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;User [uid=&quot; + uid + &quot;, name=&quot; + name + &quot;, password=&quot; + password + &quot;]&quot;;
+    }
+
+}
+
+</code></pre>
+</li>
+<li><p>创建hibernate映射文件 user.hbm.xml</p>
+<pre><code class="xml">&lt;!DOCTYPE hibernate-mapping PUBLIC 
+    &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;
+    &quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&gt;
+
+&lt;hibernate-mapping&gt;
+    &lt;class name=&quot;com.liu.pojo.User&quot; table=&quot;t_user&quot;&gt;
+        &lt;!--hibernate要求有一个主键 name属性名 column表的列名--&gt;
+        &lt;id name=&quot;uid&quot; column=&quot;uid&quot;&gt;
+            &lt;generator class=&quot;native&quot;/&gt;
+        &lt;/id&gt;
+        &lt;property name=&quot;name&quot; column=&quot;name&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;password&quot; column=&quot;password&quot;&gt;&lt;/property&gt;
+    &lt;/class&gt;
+
+&lt;/hibernate-mapping&gt;
+</code></pre>
+</li>
+<li><p>在 src 下添加hibernate配置文件 hibernate.cfg.xml (fixed file name)</p>
+<p><code>`</code>xml<br>&lt;!DOCTYPE hibernate-configuration PUBLIC</p>
+<pre><code>&quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;
+&quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;
+</code></pre><p><hibernate-configuration></hibernate-configuration></p>
+<pre><code>&lt;session-factory&gt;
+    &lt;!--数据库基本信息 --&gt;
+    &lt;property name=&quot;hibernate.connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+    &lt;property name=&quot;hibernate.connection.url&quot;&gt;jdbc:mysql://localhost:3306/mydb?characterEncoding=utf-8&lt;/property&gt;
+    &lt;property name=&quot;hibernate.connection.username&quot;&gt;root&lt;/property&gt;
+    &lt;property name=&quot;hibernate.connection.password&quot;&gt;root123&lt;/property&gt;
+
+    &lt;!-- Hibernate的方言 --&gt;
+    &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
+    &lt;!-- 显示sql语句 控制台输出--&gt;
+    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
+
+    &lt;!--格式化sql  --&gt;
+    &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
+
+    &lt;!-- hbm:映射 to DDL: create drop alter --&gt;
+    &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;update&lt;/property&gt;
+
+    &lt;!--加载映射文件  --&gt;
+    &lt;mapping resource=&quot;com/liu/pojo/user.hbm.xml&quot;&gt;&lt;/mapping&gt;
+&lt;/session-factory&gt;
+</code></pre></li>
+</ol>
+<p>   </p>
+<pre><code>
+5. 测试 CRUD
+
+   测试类程序清单：
+
+   ```java
+   package com.liu.test;
+
+   import java.util.List;
+
+   import org.hibernate.Criteria;
+   import org.hibernate.Query;
+   import org.hibernate.SQLQuery;
+   import org.hibernate.Session;
+   import org.hibernate.SessionFactory;
+   import org.hibernate.Transaction;
+   import org.hibernate.cfg.Configuration;
+   import org.hibernate.criterion.Restrictions;
+   import org.hibernate.query.NativeQuery;
+   import org.junit.After;
+   import org.junit.Before;
+   import org.junit.Test;
+
+   import com.liu.pojo.User;
+
+   public class TestHbm {
+       Session session;
+       Transaction transaction;
+       SessionFactory sessionFactory;
+
+       @Before
+       public void before() {
+           // 1.Hiberante框架加载核心配置文件(有数据库连接信息)
+           Configuration cfg = new Configuration();
+
+           cfg.configure();
+
+           // 2.创建一个SessionFactory.
+           sessionFactory = cfg.buildSessionFactory();
+
+           // 3.获得Session对象.
+           session = sessionFactory.openSession();
+
+           // 4.默认的情况下,事务是不自动提交
+           transaction = session.beginTransaction();
+       }
+
+       @After
+       public void after() {
+           // 6.事务提交
+           transaction.commit();
+
+           // 7.释放资源
+           session.clear();
+           sessionFactory.close();
+       }
+
+       @Test
+       public void testInsert() {
+
+
+           /**
+            * 如有乱码，则在数据库连接设置编码为utf8
+            */
+           // 5.业务逻辑(插入一一条数据)
+           User user = new User();
+           user.setName(&quot;张三&quot;);
+           user.setPassword(&quot;123&quot;);
+           user.setUid(1);
+
+           session.save(user);
+       }
+
+       @Test
+       public void testSelect() {
+           /**
+            * get 和load的区别
+            * 1.发送SQL的时机:            
+            *     load这个方法采用了一个技术.lazy延迟加载(懒加载).真正使用这个对象的数据的时候.(对象的数据不包括主键).
+            *    
+            *     get这个方法是立即检索.当执行session.get()方法的时候,马上发送SQL语句查询.
+            *                
+            * 2.返回的对象:        
+            *     load方法返回的是代理对象.            
+            *     get方法返回的是真实的对象.
+            *
+            * 3.查询一个不存在的数据:
+            *     load方法抛异常:ObjectNotFoundException.
+            *     get方法抛异常:NullPointException.
+            */
+   //        User user = (User)session.get(User.class,2);
+   //        User user = (User)session.load(User.class,2);
+   //        System.out.println(user.getName());
+
+           //HQL
+   //        Query query = session.createQuery(&quot;from t_user where name = ?&quot;);
+   //        query.setParameter(0, &quot;张三&quot;);
+   //        List list = query.list();
+   //        System.out.println(list);
+
+           //QBC
+   //        Criteria criteria = session.createCriteria(User.class);
+   //        criteria.add(Restrictions.eq(&quot;name&quot;,&quot;张三&quot;));
+   //        List&lt;User&gt; list = criteria.list();
+   //        System.out.println(list);
+
+           //sql
+           SQLQuery  query = session.createSQLQuery(&quot;select * from t_user&quot;);
+           query.addEntity(User.class);
+           List list = query.list();
+           System.out.println(list);
+       }
+
+       @Test
+       public void testUpdate() {
+           User user = (User)session.get(User.class, 2);
+           user.setPassword(&quot;456&quot;);
+           session.update(user);
+       }
+
+       @Test
+       public void testDelete() {
+           User user = (User)session.get(User.class, 1);
+           session.delete(user);
+       }
+
+
+   }
+
+</code></pre>
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/orm,hibernate">orm,hibernate</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "hibernate 入门&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>

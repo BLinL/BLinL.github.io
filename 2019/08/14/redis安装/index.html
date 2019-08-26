@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="welcome to bliu&#39;s blog">
+    <meta name="author" content="bliu">
+    <meta name="keywords" content="java">
+    <title>redis安装 ~ stay hungry ,stay foolish</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>stay hungry ,stay foolish</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Wednesday, August 14th 2019, 6:09 pm</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p><strong>redis 安装和入门</strong></p>
+<a id="more"></a>
+<p>redis 是一个内存数据库，所以性能很高</p>
+<p>键值对存储</p>
+<p>做缓存</p>
+<h1 id="1-下载"><a href="#1-下载" class="headerlink" title="1.下载"></a>1.下载</h1><p> wget <a href="http://download.redis.io/releases/redis-4.0.14.tar.gz（版本号可以更改）" target="_blank" rel="noopener">http://download.redis.io/releases/redis-4.0.14.tar.gz（版本号可以更改）</a></p>
+<h1 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h1><p> tar xzf redis-4.0.14.tar.gz</p>
+<h1 id="3-转到解压后的目录"><a href="#3-转到解压后的目录" class="headerlink" title="3.转到解压后的目录"></a>3.转到解压后的目录</h1><p> cd redis-4.0.14</p>
+<h1 id="4-安装"><a href="#4-安装" class="headerlink" title="4.安装"></a>4.安装</h1><p> make</p>
+<p>二进制文件被编译到src文件夹<br>可以转到src使用<code>./redis-server</code> 运行redis服务</p>
+<img src="/2019/08/14/redis安装/redis-server.png" title="安装成功">
+<p>你可以使用redis自带客户端连接redis<br>执行<code>./redis-cli</code><br>输入<code>ping</code>，可以看到返回 “PONG”，redis已经成功安装了</p>
+<img src="/2019/08/14/redis安装/ping.png">
+<hr>
+<h2 id="redis配置文件"><a href="#redis配置文件" class="headerlink" title="redis配置文件"></a>redis配置文件</h2><p>在redis解压后的文件夹的redis.conf</p>
+<p>在启动时指定配置文件</p>
+<pre><code class="shell">./redis-server /path/to/redis.conf
+</code></pre>
+<p>部分内容（已修改）</p>
+<pre><code class="shell">#bind 127.0.0.1  //只监听本机，意味着只有同一台机器的client才能连接
+protected-mode yes //允许其他主机的客户端
+port 6379 //redis端口
+daemonize yes //以守护线程方式运行
+database 16 //数据库数
+save 900 1 //持久化条件 15min后至少有1个key改变，则进行持久化可以使用save &quot;&quot;去掉之前的配置
+dbfilename dump.rdb //数据库的文件名
+dir ./ // 数据库文件的目录
+requirepass foobared //密码
+maxmemory &lt;byte&gt; //redis最大占用内存
+maxmemory-policy noeviction //删除策略，默认不删除，返回错误，不能再执行写，常用的是allkeys-lru :删除最不常用的数据
+</code></pre>
+<p>查看redis进程</p>
+<pre><code class="shell">ps -ef | grep -i redis
+</code></pre>
+<p>启动客户端</p>
+<pre><code class="shell">redis-cli -h host -p port -a password
+</code></pre>
+<p>在本机启动可以省略-h ,默认端口的话可以省略-p</p>
+<p>安全关闭</p>
+<pre><code class="shell">密码登录客户端 执行shutdown
+</code></pre>
+<p>常用命令</p>
+<pre><code class="shell">set key value 
+get key //类似键值对
+
+del key //删除key,返回记录数
+info momory //内存信息 
+exists key //key是否存在 
+persist key //持久化一个key
+expire key seconds //设置key的过期时间,默认不过期 -1 永久 -2失效
+pexpire key millions //毫秒单位
+ttl key //剩余时间
+pttl key //毫秒为单位的剩余时间
+keys partten //*代表所有 ？代表一个字符
+
+//默认是在第一个也就是0索引
+select 1 //切换数据库
+randomkey //从当前数据库随机返回一个key
+
+move key index //移动
+type key //key的类型
+</code></pre>
+<h2 id="redis支持的类型"><a href="#redis支持的类型" class="headerlink" title="redis支持的类型"></a>redis支持的类型</h2><p>string、 hash、 list、 set、 zset(有序集合)</p>
+<h2 id="String类型常用命令"><a href="#String类型常用命令" class="headerlink" title="String类型常用命令"></a>String类型常用命令</h2><pre><code class="redis">set key value
+get key
+
+setnx key value //当key不存在时赋值 ，set if not exists
+getrange key start end//获取字符串的子串
+getset key value //先取值后赋值
+strlen key // 获取字符串长度
+del key //删除
+incr key //自增1，没有值的话初始化为0再执行自增
+incrby key 数值 //自增 指定值
+decr key
+decrby key 数值
+append key str //字符串拼接，如果key不存在则赋值
+</code></pre>
+<p>场景：</p>
+<ol>
+<li>存储单个字符串或者json字符串</li>
+<li>string 类型时<strong>二进制安全</strong>的所以可以存储图片内容的二进制数据</li>
+<li>计数器，点赞数</li>
+<li>访问统计，incr是原子操作</li>
+</ol>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><ol>
+<li><p>存储对象 </p>
+<p>为什么不建议使用string存储对象？</p>
+<blockquote>
+<p>虽然对象也能存储为string类型（json）但是需要修改对象时由于需要把整个对象取出，耗费时间,而且并发效率低</p>
+<p>还可以以多个 ”key:id:field “的形式存储，但是也会浪费空间</p>
+</blockquote>
+</li>
+</ol>
+<pre><code>hset key field value //存储
+hget key field //获取
+
+hmset key field value ...//存储多个键值对
+hmget key field1 field2 ..//获取字段的值
+hgetall key //获取所有字段值
+
+hkeys key //查询有哪些字段
+hlen key //字段数量
+hdel key field1 ... //删除字段
+
+hsetnx key field value //字段不存在时设置值
+hincrby key field 1 //自增
+hexists key field //是否存在 1存在 0不存在
+
+把所有field删除后key也会被删除
+del key //删除
+</code></pre><p>命名规范：</p>
+<p>user:1:password</p>
+<p>便于查找</p>
+<h2 id="java连接redis"><a href="#java连接redis" class="headerlink" title="java连接redis"></a>java连接redis</h2><p>在pom文件添加jedis依赖</p>
+<pre><code class="xml">&lt;dependency&gt;
+            &lt;groupId&gt;redis.clients&lt;/groupId&gt;
+            &lt;artifactId&gt;jedis&lt;/artifactId&gt;
+            &lt;version&gt;2.9.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>测试：</p>
+<pre><code class="java">package com.liu;
+
+import redis.clients.jedis.Jedis;
+
+public class Test {
+    public static void main(String[] args) {
+        Jedis jedis = new Jedis(&quot;104.238.172.91&quot;,6379);
+        jedis.auth(&quot;password&quot;);//在redis配置文件 取消绑定本机并设置密码
+        System.out.println(jedis.ping());
+    }
+}
+
+</code></pre>
+<p>在这之前，请确保linux服务器的<strong>6379</strong>端口号已经打开</p>
+<p>如果没有则使用以下命令打开</p>
+<pre><code class="shell">firewall-cmd --list-ports //查看端口号是否开启
+firewall-cmd --zone=public --add-port=6379/tcp --permanent //开启防火墙的6379端口
+firewall-cmd --reload //重启防火墙
+</code></pre>
+<p><strong>测试B</strong></p>
+<p>使用JedisPool管理连接</p>
+<p>JedisPoolUtil</p>
+<pre><code class="java">package com.liu;
+
+
+import com.sun.istack.internal.NotNull;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+public class JedisPoolUtil {
+    private JedisPoolUtil(){}
+    private static JedisPoolConfig config;
+    static {
+        config = new JedisPoolConfig();
+        config.setMaxTotal(6);//最大连接数
+        config.setMaxIdle(2);//最大空闲数
+    }
+
+    public static Jedis getJedis(){
+        JedisPool jedisPool = new JedisPool(config,&quot;104.238.172.91&quot;,6379,2000,&quot;password&quot;);
+
+        return jedisPool.getResource();
+    }
+
+    public static void close(@NonNull Jedis jedis){
+        jedis.close();
+    }
+
+}
+
+</code></pre>
+<p>test</p>
+<pre><code class="java">package com.liu;
+
+import redis.clients.jedis.Jedis;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Test1 {
+    public static void main(String[] args) {
+
+        //User selectById(1);
+        int id = 1;
+        Jedis jedis = JedisPoolUtil.getJedis();
+        String key = User.getKeyName()+id; //user:1
+
+        if(jedis.exists(key)){
+            Map&lt;String, String&gt; hash = jedis.hgetAll(key);
+            User user = new User();
+            user.setId(Integer.parseInt(hash.get(&quot;id&quot;)));
+            user.setUname(hash.get(&quot;uname&quot;));
+            user.setPassword(hash.get(&quot;password&quot;));
+
+            System.out.println(&quot;redis中查询：&quot;+user);
+        }else{
+            //从mysql查询
+
+            User user = new User();
+            user.setUname(&quot;张三&quot;);
+            user.setId(id);
+            user.setPassword(&quot;123&quot;);
+            System.out.println(&quot;从mysql查询&quot; + user);
+
+            Map&lt;String,String&gt; map = new HashMap&lt;String, String&gt;();
+            map.put(&quot;uname&quot;,user.getUname());
+            map.put(&quot;id&quot;,user.getId()+&quot;&quot;);
+            map.put(&quot;password&quot;,user.getPassword());
+            //插入redis
+            String a = jedis.hmset(key, map);
+            System.out.println(&quot;redis插入：&quot;+a);
+
+        }
+    }
+}
+
+</code></pre>
+<p>RedisTemplate</p>
+<p>待更新…</p>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/redis">redis</a>
+                                
+                                    <a class="hover-with-bg" href="/tags/nosql">nosql</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "redis安装&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>
