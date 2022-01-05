@@ -83,9 +83,13 @@ if __name__ == "__main__":
     items = get_flie_names(base_dir)
     # print(items)
     html = serve_template('index_template.html', {'data': items})
-
     f = open('./index.html','w',encoding="utf-8")
     f.write(html)
+
+    for file, post in items.items():
+        f = open(file.replace('.md','.html'),'w',encoding="utf-8")
+        html = serve_template('post_template.html', {'data': {file: post}})
+        f.write(html)
 
 
     # i = 0
