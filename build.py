@@ -90,9 +90,5 @@ if __name__ == "__main__":
         html = serve_template('post_template.html', {'data': {file: post}})
         f.write(html)
 
-    os.system("git add .")
-    os.system("git commit -m\"update\"")
-    os.system("git push")
-
         
 
