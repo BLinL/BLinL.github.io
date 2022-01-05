@@ -78,7 +78,6 @@ def get_flie_names(path):
 
 
 if __name__ == "__main__":
-    # print(files)
     # buid index
     items = get_flie_names(base_dir)
     # print(items)
@@ -91,14 +90,9 @@ if __name__ == "__main__":
         html = serve_template('post_template.html', {'data': {file: post}})
         f.write(html)
 
+    os.system("git add .")
+    os.system("git commit -m\"update\"")
+    os.system("git push")
 
-    # i = 0
-    # for name in file_names:
-    #     i += 1
-    #     post_name = name.split('/')[-1]
-    #     print(f"{i}. [{post_name}]({name})")
-    #     f.write(f"{i}. [{post_name}]({name}) \n\n")
-
-    # f.close()
         
 
