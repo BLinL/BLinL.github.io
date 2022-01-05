@@ -1,37 +1,16 @@
-## Welcome to GitHub Pages
+原理：
+github 仓库支持pages， 静态页面托管在仓库中就可以实现网页浏览
+例如 Hexo 等支持将md文件转换为博客页面
 
-You can use the [editor on GitHub](https://github.com/BLinL/BLinL.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+我不想用类似的软件（因为觉得不需要很复杂）， 因此写了简单的脚本生成博客页面
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+效果：https://blinl.github.io/
 
-### Markdown
+操作：
+编写md文件后可由脚本自动生成页面，并上传仓库
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BLinL/BLinL.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+进度：
+ - 页面转换（已完成）
+ - 博客美化
+ - 分页
