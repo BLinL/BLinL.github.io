@@ -1,12 +1,8 @@
 from markdown import markdown
 
-def mdfile2html(file):
-    file = open('posts/docker.md', encoding='utf-8').read()
-
-    html = markdown(file)
-
+def mdfile2html(f):
+    html = markdown(f)
     # print(html)
-
     return html
 
 

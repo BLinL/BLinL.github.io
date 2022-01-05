@@ -119,9 +119,9 @@
   <div class="main">
     % for t, c in data.items():
       <a href="#" class="title">${t}</a>
-      <div class="status">发布于：2050-10-01 | 阅读：3500 | 标签：#两性 #HTML</div>
+      <div class="status">发布于：${c.create_at}</div>
       <div class="content">
-        ${c}
+        ${c.content}
       </div>
     % endfor
   </div>
