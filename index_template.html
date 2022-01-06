@@ -62,8 +62,9 @@
   /* border: 5px solid #eee; */
   padding: 10px 20px;
   font-size: 30px;
-  display: inline-block;
+  /* display: inline-block; */
   margin-bottom: 10px;
+
 }
 
 .article-list, .article {
@@ -91,7 +92,7 @@
 .article .status {
   font-size: 13px;
   color: #ccc;
-  border-bottom: 5px dotted rgb(197, 190, 190);
+  border-bottom: 1px dotted rgb(197, 190, 190);
 }
 
 .article-list .item > *,
@@ -109,25 +110,51 @@
     padding: 20px;
     display: block;
 }
+
+.intro {
+  color: #ff0;
+}
+
+.circle{
+    width:120px; 
+    height:120px; 
+    border-radius:50%; 
+    overflow:hidden;
+    margin: auto; /*居中对齐*/
+    text-align: center;
+}
+.circle img{
+    width: 100%;
+    height: 100%;
+}
   </style>
   <title>王花花</title>
 </head>
 <%
-  # SET YOU BASE URL
+  # SET YOU BASE IFNO
   BASE_URL = "https://blinl.github.io"
   auth_info_url = "https://github.com/BLinL"
+
+  ABOUT = "just for fun"
+  CONCAT = "TEL:13137031052"
+  SUPPORT = "ALIPAY"
 %>
 
 <body>
   <div class="side-bar">
     <div class="header">
-      <a href="https://github.com/BLinL" class="logo">follow me</a>
-      <div class="intro">my personal blog .</div>
+      <div class=circle>
+        <a href="https://github.com/BLinL">
+          <img src="https://avatars.githubusercontent.com/u/46752781?s=400&u=2db69c783753d6cda47415eea53c77b8a224281e&v=4" alt="">
+        </a>
+      </div>
+     
+      <div class="intro">我的个人博客</div>
     </div>
     <div class="nav">
-      <a href="#" class="item">关于我</a>
-      <a href="#" class="item">联系我</a>
-      <a href="#" class="item">捐助我</a>
+      <a href="#" class="item">ABOUT: ${ABOUT}</a>
+      <a href="#" class="item">LINK: ${CONCAT}</a>
+      <a href="#" class="item">SUPPORT: ${SUPPORT}</a>
     </div>
     <div class="tag-list">
       <a href="#" class="item"># 夸夸我</a>
