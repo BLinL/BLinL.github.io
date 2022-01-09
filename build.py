@@ -53,7 +53,6 @@ class Post(object):
 
 def get_flie_names(path):
     x = os.walk(path)
-
     items = {}
     for root, dir_list, file_list in x:
         files = [file for file in file_list if file.endswith('.md')]
@@ -76,19 +75,37 @@ def get_flie_names(path):
 
     return items
 
+def split_list(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 if __name__ == "__main__":
     # buid index
     items = get_flie_names(base_dir)
     # print(items)
-    html = serve_template('index_template.html', {'data': items})
-    f = open('./index.html','w',encoding="utf-8")
-    f.write(html)
+   
+
+    page_genetetor  = split_list(list(items), 3)
+    # print(list(pagelst))
+    pagelist = list(page_genetetor)
+    page = len(list(pagelist))
+    pagenum = 0
+    for i in pagelist:
+      # i is pagenum
+      print(i)
+      if pagenum == 0:
+        filename = './index.html'
+      else:
+        filename = f'./index{pagenum}.html'
+      html = serve_template('index_template.html', {'data': items, 'page': page})
+      f = open(filename,'w',encoding="utf-8")
+      f.write(html)
+      pagenum = pagenum + 1
 
     for file, post in items.items():
-        f = open(file.replace('.md','.html'),'w',encoding="utf-8")
-        html = serve_template('post_template.html', {'data': {file: post}})
-        f.write(html)
+      f = open(file.replace('.md','.html'),'w',encoding="utf-8")
+      html = serve_template('post_template.html', {'data': {file: post}})
+      f.write(html)
 
         
 
