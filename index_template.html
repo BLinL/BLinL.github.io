@@ -144,21 +144,23 @@ ul.pagination li a {
   <title>王花花</title>
 </head>
 <%
-  # SET YOU BASE IFNO
+  # SET YOUR BASE IFNO
   BASE_URL = "https://blinl.github.io"
-  auth_info_url = "https://github.com/BLinL"
 
   ABOUT = "just for fun"
-  CONCAT = "TEL:13137031052"
+  CONNECT = "13137031052"
   SUPPORT = "ALIPAY"
+
+  GITHUB = "https://github.com/BLinL"
+  PORTRAIT = "https://avatars.githubusercontent.com/u/46752781?s=400&u=2db69c783753d6cda47415eea53c77b8a224281e&v=4"
 %>
 
 <body>
   <div class="side-bar">
     <div class="header">
       <div class=circle>
-        <a href="https://github.com/BLinL">
-          <img src="https://avatars.githubusercontent.com/u/46752781?s=400&u=2db69c783753d6cda47415eea53c77b8a224281e&v=4" alt="">
+        <a href="${GITHUB}">
+          <img src="${PORTRAIT}" alt="">
         </a>
       </div>
      
@@ -166,7 +168,7 @@ ul.pagination li a {
     </div>
     <div class="nav">
       <a href="#" class="item">ABOUT: ${ABOUT}</a>
-      <a href="#" class="item">LINK: ${CONCAT}</a>
+      <a href="#" class="item">LINK: ${CONNECT}</a>
       <a href="#" class="item">SUPPORT: ${SUPPORT}</a>
     </div>
     <div class="tag-list">
@@ -202,25 +204,7 @@ ul.pagination li a {
     </div>
   </div>
   <div class="footer">
-    CopyRight&copy 2021-2022 <a href="${auth_info_url}">@bliu</a> All Rights Reserved.
+    CopyRight&copy 2021-2022 <a href="${GITHUB}">@bliu</a> All Rights Reserved.
   </div>
-
-  <script>
-    window.onload = function () {
-            var url = "BLinL.github.io/posts.json"/*json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径*/
-            var request = new XMLHttpRequest();
-            request.open("get", url);/*设置请求方法与路径*/
-            request.send(null);/*不发送数据到服务器*/
-            request.onload = function () {/*XHR对象获取到返回信息后执行*/
-                if (request.status == 200) {/*返回状态为200，即为数据获取成功*/
-                    var json = JSON.parse(request.responseText);
-                    for(var i=0;i<json.length;i++){
-                    	console.log(json[i].name);
-                    }
-                    console.log(json);
-                }
-            }
-       }
-  </script>
 </body>
 </html>
