@@ -109,6 +109,7 @@
     clear: both;
     padding: 20px;
     display: block;
+    clear: both;
 }
 
 .intro {
@@ -126,6 +127,18 @@
 .circle img{
     width: 100%;
     height: 100%;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+ul.pagination li a {
+    color: rgb(255, 255, 255);
+    float: left;
+    padding: 8px 16px;
 }
   </style>
   <title>王花花</title>
@@ -166,17 +179,26 @@
 
   <div class="main">
     <div class="article-list">
-        % for t, c in data.items():
+        % for p in data:
         <div class="item">
-            <a href="#" class="title"># ${t.replace('.md','')}</a>
-            <div class="status">👨‍💻发布于：${c.create_at}</div>
+            <a href="#" class="title"># ${p.title.replace('.md','')}</a>
+            <div class="status">👨‍💻发布于：${p.create_at}</div>
             <div class="content">
-              ${c.content[0:150]} 
+              ${p.content[0:150]} 
               <div>...</div>
-              <a href="${BASE_URL}/${t.replace('.md','.html')}">阅读全文</a>
+              <a href="${BASE_URL}/${p.title.replace('.md','.html')}">阅读全文</a>
             </div>
         </div>
         % endfor
+    </div>
+    <div>
+      <ul class="pagination">
+        % for p in range(page):
+         <li>
+           <a ${'href="index.html"' if p == 0 else f'href=index_{p}.html'}>${p}</a>
+         </li>
+        % endfor
+      </ul>
     </div>
   </div>
   <div class="footer">
