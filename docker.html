@@ -124,8 +124,19 @@
 }
 .intro {
   color: #ff0;
+  padding: 5px;
 }
-
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+ul.pagination li a {
+    color: rgb(255, 255, 255);
+    float: left;
+    padding: 8px 16px;
+}
 
   </style>
   <title>王花花</title>
@@ -199,6 +210,16 @@ docker volume crate volume_name</p>
 <p>Mountpoint 就是本地挂载点</p>
             </div>
         </div>
+    </div>
+    <div>
+      <ul class="pagination">
+         <li>
+           <a href="index.html">0</a>
+         </li>
+         <li>
+           <a href=index_1.html>1</a>
+         </li>
+      </ul>
     </div>
   </div>
   <div class="footer">

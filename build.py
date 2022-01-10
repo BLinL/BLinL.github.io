@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     for post in items:
       f = open(post.title.replace('.md','.html'),'w',encoding="utf-8")
-      html = serve_template('post_template.html', {'data': post})
+      html = serve_template('post_template.html', {'data': post, 'page': page})
       f.write(html)
 
         
