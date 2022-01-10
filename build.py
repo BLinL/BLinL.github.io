@@ -103,10 +103,10 @@ if __name__ == "__main__":
       f.write(html)
       pagenum = pagenum + 1
 
-    # for file, post in items.items():
-    #   f = open(file.replace('.md','.html'),'w',encoding="utf-8")
-    #   html = serve_template('post_template.html', {'data': {file: post}})
-    #   f.write(html)
+    for file, post in items.items():
+      f = open(file.replace('.md','.html'),'w',encoding="utf-8")
+      html = serve_template('post_template.html', {'data': {file: post}})
+      f.write(html)
 
         
 
