@@ -13,4 +13,7 @@ github 仓库支持pages， 静态页面托管在仓库中就可以实现网页�
 进度：
  - 页面转换（已完成）
  - 博客美化
- - 分页
+ - 分页 （已完成）
+ - 博客 Tag
+
+感谢开源项目：https://github.com/biaoyansu/10.x.git 页面部分使用了此html模板
