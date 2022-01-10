@@ -97,15 +97,15 @@ if __name__ == "__main__":
       if pagenum == 0:
         filename = './index.html'
       else:
-        filename = f'./index{pagenum}.html'
+        filename = f'./index_{pagenum}.html'
       html = serve_template('index_template.html', {'data': i, 'page': page})
       f = open(filename,'w',encoding="utf-8")
       f.write(html)
       pagenum = pagenum + 1
 
-    for file, post in items.items():
-      f = open(file.replace('.md','.html'),'w',encoding="utf-8")
-      html = serve_template('post_template.html', {'data': {file: post}})
+    for post in items:
+      f = open(post.title.replace('.md','.html'),'w',encoding="utf-8")
+      html = serve_template('post_template.html', {'data': post})
       f.write(html)
 
         

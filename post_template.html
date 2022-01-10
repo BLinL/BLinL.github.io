@@ -133,15 +133,13 @@
 
   <div class="main">
     <div class="article-list">
-        % for t, c in data.items():
         <div class="item">
-            <a href="#" class="title"># ${t}</a>
-            <div class="status">👨‍💻发布于：${c.create_at}</div>
+            <a href="#" class="title"># ${data.title}</a>
+            <div class="status">👨‍💻发布于：${data.create_at}</div>
             <div class="content">
-              ${c.content}
+              ${data.content}
             </div>
         </div>
-        % endfor
     </div>
   </div>
   <div class="footer">
