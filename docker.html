@@ -172,7 +172,7 @@ ul.pagination li a {
         <div class="item">
             <a href="#" class="title"># docker.md</a>
             <div class="status">👨‍💻发布于：2021-12-30 16:52:23.600262</div>
-            <div class="content">
+            <div class="content highlight highlight-source-js position-relative overflow-auto">
               <h2>Dockerfile</h2>
 <p>描述如何构建镜像</p>
 <p>image 镜像， 可以在容器运行的应用 就像安装包</p>
@@ -194,20 +194,20 @@ docker rm -rf</p>
 docker volume crate volume_name</p>
 <p>docker run -dp 3000:3000 -v todo-db:/etc/todos todo-app</p>
 <p>查看volumn信息</p>
-<p>docker volume inspect volume_name
-```
-[
+<p>docker volume inspect volume_name</p>
+<pre><code>[
     {
-        "CreatedAt": "2021-11-08T11:21:08+08:00",
-        "Driver": "local",
-        "Labels": {},
-        "Mountpoint": "/var/lib/docker/volumes/todo-db/_data",
-        "Name": "todo-db",
-        "Options": {},
-        "Scope": "local"
+        &quot;CreatedAt&quot;: &quot;2021-11-08T11:21:08+08:00&quot;,
+        &quot;Driver&quot;: &quot;local&quot;,
+        &quot;Labels&quot;: {},
+        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/todo-db/_data&quot;,
+        &quot;Name&quot;: &quot;todo-db&quot;,
+        &quot;Options&quot;: {},
+        &quot;Scope&quot;: &quot;local&quot;
     }
-]</p>
-<p>```</p>
+]
+
+</code></pre>
 <p>Mountpoint 就是本地挂载点</p>
             </div>
         </div>

@@ -172,7 +172,7 @@ ul.pagination li a {
         <div class="item">
             <a href="#" class="title"># gradle.md</a>
             <div class="status">👨‍💻发布于：2022-01-11 14:41:36.456948</div>
-            <div class="content">
+            <div class="content highlight highlight-source-js position-relative overflow-auto">
               <h2>学习gradle 第一天</h2>
 <blockquote>
 <p>Each build script you have is associated with an object of type Project and as the build script executes, it configures this Project.</p>
@@ -189,80 +189,83 @@ ul.pagination li a {
 <p>path</p>
 <p>当执行build.gradle脚本的时候, gradle会把它编译为一个class, 并且实现了Script接口， 所以所有在Script里定义的字段和方法在脚本里都可用</p>
 <h3>本地变量和额外的变量</h3>
-<p>```gradle
-//本地
-def xx = __</p>
-<p>//额外
+<pre><code class="language-gradle">//本地
+def xx = __
+
+//额外
 ext {
-    aa = <strong>
-    bb = </strong>
-}</p>
-<p>```</p>
+    aa = __
+    bb = __
+}
+
+</code></pre>
 <p>额外变量挂在那个对象底下？</p>
 <h2>第二天</h2>
 <p>一个project 可以有多个task
-task 
-```groovy</p>
-<p>task hello {
+task </p>
+<pre><code class="language-groovy">
+task hello {
     doLast {
         println 'hello' // 使用groovy
     }
 }
-```</p>
-<p>task 依赖
-<code>groovy
-task intro(dependsOn: hello) {
+</code></pre>
+<p>task 依赖</p>
+<pre><code class="language-groovy">task intro(dependsOn: hello) {
      println 'intro'
-}</code></p>
+}
+</code></pre>
 <p>task 依赖的task 可以在声明时不存在, 也就是可以不用在意定义顺序</p>
-<p>自定义属性
-```groovy</p>
-<p>task hello {
-    ext.a = "zhangsan"
+<p>自定义属性</p>
+<pre><code class="language-groovy">
+task hello {
+    ext.a = &quot;zhangsan&quot;
     doLast {
-        println "hello name is : $hello.a"
+        println &quot;hello name is : $hello.a&quot;
     }
 }
-```
-groovy脚本极大增加了构建灵活性</p>
-<p>变量tasks 保存了所有定义的task
-<code>tasks.register("hello_a") {
+</code></pre>
+<p>groovy脚本极大增加了构建灵活性</p>
+<p>变量tasks 保存了所有定义的task</p>
+<pre><code>tasks.register(&quot;hello_a&quot;) {
     dependsOn tasks.intro
     doLast {
         println 'hi gradle'
     }
-}</code></p>
+}
+</code></pre>
 <p>执行脚本
 gradle -q taskname</p>
 <p>-q 简洁输出内容</p>
 <h2>灵活</h2>
-<p>批量定义task
-<code>groovy
-4.times {counter-&gt;
-    tasks.register("task_$counter") {
+<p>批量定义task</p>
+<pre><code class="language-groovy">4.times {counter-&gt;
+    tasks.register(&quot;task_$counter&quot;) {
         doLast {
-            println("task $counter run")
+            println(&quot;task $counter run&quot;)
         }
     }
-}</code>
-<code>groovy
-// add dependencies dynamically
-tasks.named("task_3") {
+}
+</code></pre>
+<pre><code class="language-groovy">// add dependencies dynamically
+tasks.named(&quot;task_3&quot;) {
     dependsOn('task_2','hello')
-}</code></p>
+}
+</code></pre>
 <h3>牛啊</h3>
-<p>脚本可以添加依赖（编写构建脚本使用 非项目依赖）
-```
-import org.apache.commons.codec.binary.Base64</p>
-<p>buildscript {
+<p>脚本可以添加依赖（编写构建脚本使用 非项目依赖）</p>
+<pre><code>import org.apache.commons.codec.binary.Base64
+
+buildscript {
     repositories {
         mavenCentral()
         dependencies {
             classpath group: 'commons-codec', name: 'commons-codec', version: '1.2'
         }
     }
-}</p>
-<p>```</p>
+}
+
+</code></pre>
 <p>多模块项目也可以在子项目构建脚本中使用 buildScript 来声明依赖</p>
 <p>每个Project默认有一个buildEnvironment task可以调用以报告构建脚本依赖项的解决情况。</p>
             </div>
