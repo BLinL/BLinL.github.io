@@ -62,9 +62,8 @@
   /* border: 5px solid #eee; */
   padding: 10px 20px;
   font-size: 30px;
-  /* display: inline-block; */
+  display: inline-block;
   margin-bottom: 10px;
-
 }
 
 .article-list, .article {
@@ -92,7 +91,7 @@
 .article .status {
   font-size: 13px;
   color: #ccc;
-  border-bottom: 1px dotted rgb(197, 190, 190);
+  border-bottom: 1px solid rgb(197, 190, 190);
 }
 
 .article-list .item > *,
@@ -109,11 +108,6 @@
     clear: both;
     padding: 20px;
     display: block;
-    clear: both;
-}
-
-.intro {
-  color: #ff0;
 }
 
 .circle{
@@ -128,7 +122,10 @@
     width: 100%;
     height: 100%;
 }
-
+.intro {
+  color: #ff0;
+  padding: 5px;
+}
 ul.pagination {
     display: inline-block;
     padding: 0;
@@ -140,8 +137,9 @@ ul.pagination li a {
     float: left;
     padding: 8px 16px;
 }
+
   </style>
-  <title>🌈 personal blog</title>
+  <title>gradle.md</title>
 </head>
 
 
@@ -153,7 +151,6 @@ ul.pagination li a {
           <img src="https://avatars.githubusercontent.com/u/46752781?s=400&u=2db69c783753d6cda47415eea53c77b8a224281e&v=4" alt="">
         </a>
       </div>
-     
       <div class="intro">我的个人博客</div>
     </div>
     <div class="nav">
@@ -172,43 +169,101 @@ ul.pagination li a {
   <div class="main">
     <div class="article-list">
         <div class="item">
-            <a href="#" class="title"># docker</a>
-            <div class="status">👨‍💻发布于：2021-12-30 16:52:23.600262</div>
-            <div class="content">
-              <h2>Dockerfile</h2>
-<p>描述如何构建镜像</p>
-<p>image 镜像， 可以在容器运行的应用 就像安装包</p>
-<h2>make image</h2>
-<p>docker build [-t name] .</p>
-<h2>RUN</h2>
-<p>docker run - 
-              <div>...</div>
-              <a href="https://blinl.github.io/docker.html">阅读全文</a>
-            </div>
-        </div>
-        <div class="item">
-            <a href="#" class="title"># gradle</a>
+            <a href="#" class="title"># gradle.md</a>
             <div class="status">👨‍💻发布于：2022-01-11 14:41:36.456948</div>
             <div class="content">
               <h2>学习gradle 第一天</h2>
 <blockquote>
-<p>Each build script you have is associated with an object of type Project and as the build script executes, it con 
-              <div>...</div>
-              <a href="https://blinl.github.io/gradle.html">阅读全文</a>
-            </div>
-        </div>
-        <div class="item">
-            <a href="#" class="title"># learngit</a>
-            <div class="status">👨‍💻发布于：2022-01-05 17:27:44.737423</div>
-            <div class="content">
-              <h3>main分支向后移动</h3>
-<p><code>git rebase side main</code></p>
-<h3>合并分支</h3>
-<p><code>merge or rebase( clean )</code></p>
-<h3>本地分支跟踪远程分支</h3>
-<p><code>g 
-              <div>...</div>
-              <a href="https://blinl.github.io/learngit.html">阅读全文</a>
+<p>Each build script you have is associated with an object of type Project and as the build script executes, it configures this Project.</p>
+</blockquote>
+<p>与build.gradle 关联会有一个Project对象， 当执行构建脚本时它会配置这个Project</p>
+<h3>Project 提供的标准字段</h3>
+<p>group</p>
+<p>version</p>
+<p>name</p>
+<p>Project</p>
+<p>description</p>
+<p>projectDir</p>
+<p>buildDir</p>
+<p>path</p>
+<p>当执行build.gradle脚本的时候, gradle会把它编译为一个class, 并且实现了Script接口， 所以所有在Script里定义的字段和方法在脚本里都可用</p>
+<h3>本地变量和额外的变量</h3>
+<p>```gradle
+//本地
+def xx = __</p>
+<p>//额外
+ext {
+    aa = <strong>
+    bb = </strong>
+}</p>
+<p>```</p>
+<p>额外变量挂在那个对象底下？</p>
+<h2>第二天</h2>
+<p>一个project 可以有多个task
+task 
+```groovy</p>
+<p>task hello {
+    doLast {
+        println 'hello' // 使用groovy
+    }
+}
+```</p>
+<p>task 依赖
+<code>groovy
+task intro(dependsOn: hello) {
+     println 'intro'
+}</code></p>
+<p>task 依赖的task 可以在声明时不存在, 也就是可以不用在意定义顺序</p>
+<p>自定义属性
+```groovy</p>
+<p>task hello {
+    ext.a = "zhangsan"
+    doLast {
+        println "hello name is : $hello.a"
+    }
+}
+```
+groovy脚本极大增加了构建灵活性</p>
+<p>变量tasks 保存了所有定义的task
+<code>tasks.register("hello_a") {
+    dependsOn tasks.intro
+    doLast {
+        println 'hi gradle'
+    }
+}</code></p>
+<p>执行脚本
+gradle -q taskname</p>
+<p>-q 简洁输出内容</p>
+<h2>灵活</h2>
+<p>批量定义task
+<code>groovy
+4.times {counter-&gt;
+    tasks.register("task_$counter") {
+        doLast {
+            println("task $counter run")
+        }
+    }
+}</code>
+<code>groovy
+// add dependencies dynamically
+tasks.named("task_3") {
+    dependsOn('task_2','hello')
+}</code></p>
+<h3>牛啊</h3>
+<p>脚本可以添加依赖（编写构建脚本使用 非项目依赖）
+```
+import org.apache.commons.codec.binary.Base64</p>
+<p>buildscript {
+    repositories {
+        mavenCentral()
+        dependencies {
+            classpath group: 'commons-codec', name: 'commons-codec', version: '1.2'
+        }
+    }
+}</p>
+<p>```</p>
+<p>多模块项目也可以在子项目构建脚本中使用 buildScript 来声明依赖</p>
+<p>每个Project默认有一个buildEnvironment task可以调用以报告构建脚本依赖项的解决情况。</p>
             </div>
         </div>
     </div>
