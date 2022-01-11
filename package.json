@@ -1,0 +1,22 @@
+{
+  "name": "blinl.github.io",
+  "version": "1.0.0",
+  "description": "原理：\r github 仓库支持pages， 静态页面托管在仓库中就可以实现网页浏览\r 例如 Hexo 等支持将md文件转换为博客页面",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BLinL/BLinL.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BLinL/BLinL.github.io/issues"
+  },
+  "homepage": "https://github.com/BLinL/BLinL.github.io#readme",
+  "dependencies": {
+    "@primer/css": "^19.1.1"
+  }
+}
